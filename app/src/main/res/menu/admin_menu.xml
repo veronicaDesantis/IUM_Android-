@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:showIn="navigation_view">
+
+	<group android:checkableBehavior="single">
+		<item
+			android:id="@+id/dashboard"
+			android:icon="@drawable/ic_dashboard"
+			android:title="@string/dashboard_menu" />
+		<item
+			android:id="@+id/teacher"
+			android:icon="@drawable/ic_coaching"
+			android:title="@string/teacher_menu" />
+		<item
+			android:id="@+id/course"
+			android:icon="@drawable/ic_course"
+			android:title="@string/course_menu" />
+		
+		<item
+			android:id="@+id/user"
+			android:icon="@drawable/ic_customer"
+			android:title="@string/user_menu" />
+		<item
+			android:id="@+id/catalogue"
+			android:icon="@drawable/ic_catalogue"
+			android:title="@string/catalogue_menu" />
+		<item
+			android:id="@+id/profile_menu"
+			android:icon="@drawable/ic_settings"
+			android:title="@string/profile_menu" />
+	</group>
+</menu>

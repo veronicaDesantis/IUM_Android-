@@ -1,0 +1,68 @@
+<resources>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="action_settings">Settings</string>
+	
+	<string name="menu_home">Home</string>
+	<string name="menu_gallery">Gallery</string>
+	<string name="menu_slideshow">Slideshow</string>
+	
+	<string name="preferencesManager">session</string>
+	<!-- #region USER MANAGEMENT -->
+	<string name="name_hint">Nome</string>
+	<string name="surname_hint">Cognome</string>
+	<string name="email_hint">Email</string>
+	<string name="password_hint">Password</string>
+	<string name="confirm_password_hint">Conferma password</string>
+	<string name="forgot_password_hint">Password dimenticata?</string>
+	<string name="signup_login_hint">Hai già un account? Accedi</string>
+	<string name="login_signup_hint">Non hai un account? Registrati</string>
+	
+	<string name="user_error">Le credenziali risultano errate</string>
+	<string name="email_error">Inserire l\'email</string>
+	<string name="email_in_db_error">Email già registrata</string>
+	<string name="email_not_in_db_error">L\'email non risulta registrata</string>
+	<string name="generic_error">Errore generico</string>
+	<string name="password_error">Inserire la password</string>
+	<string name="name_error">Inserire il nome</string>
+	<string name="surname_error">Inserire il cognome</string>
+	<string name="password_validity_error">Inserire una password valida</string>
+	<string name="password_confirm_error">Le due password non corrispondono</string>
+	<!-- #endregion My Region -->
+	
+	<!-- #region DASHBOARD -->
+	<string name="course_kpi">Totale corsi</string>
+	<string name="teacher_kpi">Totale docenti</string>
+	<!-- #endregion -->
+	
+	<!-- #region MENU -->
+	<string name="dashboard_menu">Dashboard</string>
+	<string name="course_menu">Corsi</string>
+	<string name="teacher_menu">Docenti</string>
+	<string name="user_menu">Utenti registrati</string>
+	<string name="calendar_menu">Calendario</string>
+	<string name="profile_menu">Profilo personale</string>
+	<string name="catalogue_menu">Catalogo</string>
+	
+	<!-- #endregion -->
+	
+	<!-- #region PAGE TITLE -->
+	<string name="app_name">Gestione corsi</string>
+	<string name="login_page">Login</string>
+	<string name="register_page">Registrati</string>
+	<string name="forgot_page">Recupera password</string>
+	<string name="dashboard_page">Dashboard</string>
+	<!-- #endregion -->
+	
+	<!-- #region BUTTON -->
+	<string name="login_btn">Login</string>
+	<string name="register_btn">Registrati</string>
+	<string name="verify_btn">Verifica</string>
+	<string name="chage_pw_btn">Modifica password</string>
+	<!-- #endregion -->
+	
+	<!-- #region SYSTEM -->
+	<string name="layout_content_description">Sfondo</string>
+	
+	<!-- #endregion -->
+</resources>
