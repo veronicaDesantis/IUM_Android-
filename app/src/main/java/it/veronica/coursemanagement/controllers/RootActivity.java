@@ -1,17 +1,14 @@
-package com.example.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
 
 import com.example.coursemanagement.R;
-import com.example.coursemanagement.model.User_type;
-import com.example.coursemanagement.utility.PreferencesManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import it.veronica.coursemanagement.model.User_type;
+import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,8 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class RootActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+public class RootActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -38,23 +34,33 @@ public class RootActivity extends AppCompatActivity implements
         PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), this);
         String user_type_id = preferencesManager.GetPreferenceByKey("User_type_id");
         navigationView.getMenu().clear();
-        if (Integer.parseInt(user_type_id) == User_type.STUDENT.getValue())
-        {
+        if (Integer.parseInt(user_type_id) == User_type.STUDENT.getValue()) {
             navigationView.inflateMenu(R.menu.student_menu);
-        }
-        else if(Integer.parseInt(user_type_id) == User_type.TEACHER.getValue())
-        {
+        } else if (Integer.parseInt(user_type_id) == User_type.TEACHER.getValue()) {
             navigationView.inflateMenu(R.menu.teacher_menu);
-        }
-        else if(Integer.parseInt(user_type_id) == User_type.ADMIN.getValue())
-        {
+        } else if (Integer.parseInt(user_type_id) == User_type.ADMIN.getValue()) {
             navigationView.inflateMenu(R.menu.admin_menu);
+        } else {
+            navigationView.inflateMenu(R.menu.guest_menu);
         }
-        else
-        {
-            navigationView.inflateMenu(R.menu.student_menu);
-        }
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    // Handle navigation view item clicks here.
+                    int id = item.getItemId();
+
+                    if (id == R.id.catalogue) {
+                        //Cambio fragment per il login
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.nav_host_fragment, Catalogue.class, null)
+                                .setReorderingAllowed(true)
+                                .addToBackStack("name") // name can be null
+                                .commit();
+                    }
+                    return true;
+            }
+        });
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_dashboard /*, R.id.nav_gallery, R.id.nav_slideshow*/)
                 .setDrawerLayout(drawer)
@@ -64,21 +70,7 @@ public class RootActivity extends AppCompatActivity implements
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.catalogue) {
-            //Cambio fragment per il login
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, Catalogue.class, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
-                    .commit();
-        }
-        return true;
-    }
 
 
 

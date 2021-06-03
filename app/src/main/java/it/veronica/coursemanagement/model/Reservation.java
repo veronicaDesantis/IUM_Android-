@@ -1,4 +1,4 @@
-package com.example.coursemanagement.model;
+package it.veronica.coursemanagement.model;
 
 import java.sql.Date;
 

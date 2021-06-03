@@ -1,4 +1,4 @@
-package com.example.coursemanagement.utility;
+package it.veronica.coursemanagement.utility;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

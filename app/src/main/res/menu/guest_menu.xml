@@ -9,20 +9,8 @@
 			android:icon="@drawable/ic_dashboard"
 			android:title="@string/dashboard_menu" />
 		<item
-			android:id="@+id/course"
-			android:icon="@drawable/ic_course"
-			android:title="@string/course_menu" />
-		<item
 			android:id="@+id/catalogue"
 			android:icon="@drawable/ic_catalogue"
 			android:title="@string/catalogue_menu" />
-		<item
-			android:id="@+id/profile_menu"
-			android:icon="@drawable/ic_settings"
-			android:title="@string/profile_menu" />
-		<item
-			android:id="@+id/logout"
-			android:icon="@drawable/ic_logout"
-			android:title="@string/profile_logout" />
 	</group>
 </menu>

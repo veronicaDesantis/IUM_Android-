@@ -1,9 +1,7 @@
-package com.example.coursemanagement.utility;
+package it.veronica.coursemanagement.utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.example.coursemanagement.R;
 
 public class PreferencesManager {
     private static PreferencesManager instance = null;

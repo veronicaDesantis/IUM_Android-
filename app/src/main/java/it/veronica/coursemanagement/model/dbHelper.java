@@ -1,4 +1,4 @@
-package com.example.coursemanagement.model;
+package it.veronica.coursemanagement.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

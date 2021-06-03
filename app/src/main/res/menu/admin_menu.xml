@@ -29,5 +29,9 @@
 			android:id="@+id/profile_menu"
 			android:icon="@drawable/ic_settings"
 			android:title="@string/profile_menu" />
+		<item
+			android:id="@+id/logout"
+			android:icon="@drawable/ic_logout"
+			android:title="@string/profile_logout" />
 	</group>
 </menu>

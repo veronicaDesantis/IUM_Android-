@@ -1,24 +1,17 @@
-package com.example.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
-import com.example.coursemanagement.model.User_type;
-import com.example.coursemanagement.model.dbManager;
-import com.example.coursemanagement.utility.PreferencesManager;
+import it.veronica.coursemanagement.model.dbManager;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 
 public class Dashboard extends Fragment {
 
@@ -37,13 +30,13 @@ public class Dashboard extends Fragment {
         courseChip.setText(String.valueOf(countCourse));
         Chip teacherChip = root.findViewById(R.id.teacher_kpi);
         teacherChip.setText(String.valueOf(countTeacher));
-        FloatingActionButton floatButton = root.findViewById(R.id.floatingActionButton);
-        floatButton.setOnTouchListener(floatButtonListener);
+        /*FloatingActionButton floatButton = root.findViewById(R.id.floatingActionButton);
+        floatButton.setOnTouchListener(floatButtonListener);*/
         ((RootActivity)getActivity()).getSupportActionBar().show();
         return root;
     }
 
-    private View.OnTouchListener floatButtonListener = new View.OnTouchListener() {
+    /*private View.OnTouchListener floatButtonListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
 
@@ -56,5 +49,5 @@ public class Dashboard extends Fragment {
                     .commit();
             return true;
         }
-    };
+    };*/
 }

@@ -10,7 +10,7 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.CourseManagement">
 		<activity
-			android:name=".controllers.RootActivity"
+			android:name="it.veronica.coursemanagement.controllers.RootActivity"
 			android:label="@string/app_name"
 			android:theme="@style/Theme.CourseManagement.NoActionBar">
 			<intent-filter>

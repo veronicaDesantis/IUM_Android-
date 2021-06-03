@@ -43,6 +43,7 @@
 	<string name="calendar_menu">Calendario</string>
 	<string name="profile_menu">Profilo personale</string>
 	<string name="catalogue_menu">Catalogo</string>
+	<string name="profile_logout">Logout</string>
 	
 	<!-- #endregion -->
 	

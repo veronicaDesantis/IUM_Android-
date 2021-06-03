@@ -1,21 +1,17 @@
-package com.example.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
-import com.example.coursemanagement.model.dbManager;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import it.veronica.coursemanagement.model.dbManager;
 
 public class Catalogue extends Fragment {
 

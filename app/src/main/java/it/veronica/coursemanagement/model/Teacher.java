@@ -1,4 +1,4 @@
-package com.example.coursemanagement.model;
+package it.veronica.coursemanagement.model;
 
 public class Teacher {
     public int Id;

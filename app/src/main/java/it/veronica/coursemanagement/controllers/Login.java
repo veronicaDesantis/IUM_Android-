@@ -1,4 +1,4 @@
-package com.example.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
-import com.example.coursemanagement.model.User;
-import com.example.coursemanagement.model.dbManager;
-import com.example.coursemanagement.utility.PreferencesManager;
+import it.veronica.coursemanagement.model.User;
+import it.veronica.coursemanagement.model.dbManager;
+import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Login extends Fragment {
