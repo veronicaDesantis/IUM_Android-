@@ -4,8 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.utility.AesCrypt;
+
 public class dbHelper extends SQLiteOpenHelper {
     public static final String DBNAME="CourseManagement";
+    public static final String ADMINPW = "P4$$word";
     public dbHelper(Context context){
 
         super(context, DBNAME, null, 1);
@@ -43,6 +48,9 @@ public class dbHelper extends SQLiteOpenHelper {
         i = " INSERT INTO status_type(name) VALUES('Effettuata');";
         db.execSQL(i);
         i = " INSERT INTO status_type(name) VALUES('Disdetta');";
+        db.execSQL(i);
+        //Inserisco utenza amministrativa
+        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('admin', 'admin','admin@mail.it', '" + AesCrypt.encrypt(ADMINPW) + "', 3)";
         db.execSQL(i);
     }
     @Override

@@ -29,4 +29,11 @@ public class PreferencesManager {
         editor.putString(key,value);
         editor.apply();
     }
+
+    public void ClearPreference()
+    {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

@@ -43,7 +43,8 @@
 	<string name="calendar_menu">Calendario</string>
 	<string name="profile_menu">Profilo personale</string>
 	<string name="catalogue_menu">Catalogo</string>
-	<string name="profile_logout">Logout</string>
+	<string name="logout_menu">Logout</string>
+	<string name="login_menu">Login</string>
 	
 	<!-- #endregion -->
 	
@@ -64,6 +65,6 @@
 	
 	<!-- #region SYSTEM -->
 	<string name="layout_content_description">Sfondo</string>
-	
+	<string name="admin_pw">P4$$w0rd.</string>
 	<!-- #endregion -->
 </resources>

@@ -9,6 +9,7 @@ import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,6 +34,7 @@ public class RootActivity extends AppCompatActivity {
         //Verifico il tipo di utenza
         PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), this);
         String user_type_id = preferencesManager.GetPreferenceByKey("User_type_id");
+        if (user_type_id == null) {user_type_id = "0";}
         navigationView.getMenu().clear();
         if (Integer.parseInt(user_type_id) == User_type.STUDENT.getValue()) {
             navigationView.inflateMenu(R.menu.student_menu);
@@ -49,11 +51,32 @@ public class RootActivity extends AppCompatActivity {
                     // Handle navigation view item clicks here.
                     int id = item.getItemId();
 
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+
                     if (id == R.id.catalogue) {
-                        //Cambio fragment per il login
+                        //Cambio fragment per il catalogo
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.nav_host_fragment, Catalogue.class, null)
+                                .setReorderingAllowed(true)
+                                .addToBackStack("name") // name can be null
+                                .commit();
+                    }
+                    else if (id == R.id.login){
+                        //Cambio fragment per il login
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.nav_host_fragment, Login.class, null)
+                                .setReorderingAllowed(true)
+                                .addToBackStack("name") // name can be null
+                                .commit();
+                    }
+                    else if(id == R.id.logout){
+                        //Cambio fragment per il logout
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.nav_host_fragment, Logout.class, null)
                                 .setReorderingAllowed(true)
                                 .addToBackStack("name") // name can be null
                                 .commit();
@@ -67,7 +90,7 @@ public class RootActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        //NavigationUI.setupWithNavController(navigationView, navController);*/
     }
 
 

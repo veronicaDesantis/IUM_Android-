@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.coursemanagement.R;
 import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.dbManager;
+import it.veronica.coursemanagement.utility.AesCrypt;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -23,10 +24,11 @@ public class Login extends Fragment {
 
     private dbManager db = null;
     private Context myContext = null;
+    private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                               ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_login, container, false);
+        root = inflater.inflate(R.layout.fragment_login, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
         Button btn_login = root.findViewById(R.id.login_btn);
@@ -42,18 +44,23 @@ public class Login extends Fragment {
     private View.OnClickListener btnLoginListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            TextInputLayout textInputEmail = v.findViewById(R.id.textInputEmail);
-            TextInputLayout textInputPassword = v.findViewById(R.id.textInputPassword);
-            if (textInputEmail.getEditText().getText().toString().equals(""))
+            TextInputLayout textInputEmail = root.findViewById(R.id.textInputEmail);
+            TextInputLayout textInputPassword = root.findViewById(R.id.textInputPassword);
+            String textEmail = textInputEmail.getEditText().getText().toString();
+            String textPassword = textInputPassword.getEditText().getText().toString();
+            if (textEmail.equals(""))
             {
                 textInputEmail.setError(getResources().getString(R.string.email_error));
             }
-            else if (textInputPassword.getEditText().getText().toString().equals("")) {
+            else if (textPassword.toString().equals("")) {
                 textInputPassword.setError(getResources().getString(R.string.password_error));
             }
             else
             {
-                User dbUser = db.GetUserByMail_Password(textInputEmail.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString());
+                //cifro la password
+                String ecryptedPassword = AesCrypt.encrypt(textPassword);
+                //ecryptedPassword = ecryptedPassword.replace("\n", "").replace("\r", "");
+                User dbUser = db.GetUserByMail_Password(textEmail, ecryptedPassword);
                 if (dbUser != null)
                 {
                     PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
