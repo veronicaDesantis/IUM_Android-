@@ -140,6 +140,7 @@
 		android:layout_marginRight="32dp"
 		android:layout_marginBottom="32dp"
 		android:clickable="true"
+		android:fitsSystemWindows="false"
 		android:src="@drawable/ic_back"
 		app:backgroundTint="@color/colorPrimaryDark"
 		app:layout_constraintBottom_toBottomOf="parent"

@@ -34,6 +34,7 @@
 	<string name="logout_done">Logout correttamente effettuato</string>
 	<string name="login_done">Bentornato!</string>
 	<string name="register_done">Benvenuto!</string>
+	<string name="create_done">Oggetto creato</string>
 	<string name="edit_done">Modifica effettuata</string>
 	<string name="delete_done">Oggetto eliminato</string>
 	<!-- #endregion -->

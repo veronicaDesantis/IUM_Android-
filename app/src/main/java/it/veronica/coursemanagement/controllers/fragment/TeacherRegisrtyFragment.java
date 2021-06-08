@@ -35,7 +35,7 @@ public class TeacherRegisrtyFragment extends Fragment {
     private View root = null;
     private dbManager  db = null;
     private Context myContext = null;
-    private FormEnum formEnum = null;
+    private FormEnum formEnum = FormEnum.CREATION;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class TeacherRegisrtyFragment extends Fragment {
                 isEditable = true;
                 teacher_title.setText(R.string.teacher_new);
                 createButton.setVisibility(View.VISIBLE);
-                createButton.setVisibility(View.GONE);
+                editButton.setVisibility(View.GONE);
                 saveButton.setVisibility(View.GONE);
                 deleteButton.setVisibility(View.GONE);
                 break;
@@ -169,17 +169,10 @@ public class TeacherRegisrtyFragment extends Fragment {
                         //Creo anche il docente
                         Teacher teacher = new Teacher(name, surname, user_id);
                         int teacher_id = db.InsertTeacher(teacher);
-                        //Ricarico il fragment con il nuovo id, per visualizzare i dettagli del docente creato
-                        Fragment teacherTegisryFragment = new TeacherRegisrtyFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(getResources().getString(R.string.teacher_id), teacher_id);
-                        teacherTegisryFragment.setArguments(bundle);
-                        FragmentManager fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.nav_host_fragment, teacherTegisryFragment, null)
-                                .setReorderingAllowed(true)
-                                .addToBackStack(TeacherRegisrtyFragment.class.getName()) // name can be null
-                                .commit();
+                        formEnum = FormEnum.DETAIL;
+                        ToogleDetail(formEnum);
+                        Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.create_done), Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
                 }
                 else
@@ -231,7 +224,7 @@ public class TeacherRegisrtyFragment extends Fragment {
                 db.UpdateTeacher(id, name,surname);
                 formEnum = FormEnum.DETAIL;
                 ToogleDetail(formEnum);
-                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.delete_done), Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.edit_done), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
         }
