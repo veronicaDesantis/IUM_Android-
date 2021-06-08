@@ -30,6 +30,14 @@
 	<string name="password_confirm_error">Le due password non corrispondono</string>
 	<!-- #endregion My Region -->
 	
+	<!-- #region EVENT -->
+	<string name="logout_done">Logout correttamente effettuato</string>
+	<string name="login_done">Bentornato!</string>
+	<string name="register_done">Benvenuto!</string>
+	<string name="edit_done">Modifica effettuata</string>
+	<string name="delete_done">Oggetto eliminato</string>
+	<!-- #endregion -->
+	
 	<!-- #region DASHBOARD -->
 	<string name="course_kpi">Totale corsi</string>
 	<string name="teacher_kpi">Totale docenti</string>
@@ -45,7 +53,6 @@
 	<string name="catalogue_menu">Catalogo</string>
 	<string name="logout_menu">Logout</string>
 	<string name="login_menu">Login</string>
-	
 	<!-- #endregion -->
 	
 	<!-- #region PAGE TITLE -->
@@ -54,6 +61,17 @@
 	<string name="register_page">Registrati</string>
 	<string name="forgot_page">Recupera password</string>
 	<string name="dashboard_page">Dashboard</string>
+	<string name="teacher_page">Docenti</string>
+	<!-- #endregion -->
+	
+	<!-- #region TEACHER -->
+	<string name="teacher_no_result">Nessun risultato</string>
+	<string name="teacher_new">Creazione docente</string>
+	<string name="teacher_detail">Dettaglio docente</string>
+	<string name="teacher_edit">Modifica docente</string>
+	<string name="teacher_name">Nome</string>
+	<string name="teacher_surname">Cognome</string>
+	<string name="teacher_email">Email</string>
 	<!-- #endregion -->
 	
 	<!-- #region BUTTON -->
@@ -61,10 +79,13 @@
 	<string name="register_btn">Registrati</string>
 	<string name="verify_btn">Verifica</string>
 	<string name="chage_pw_btn">Modifica password</string>
+	<string name="create_btn">Crea</string>
+	<string name="edit_btn">Modifica</string>
+	<string name="save_btn">Salva</string>
+	<string name="delete_btn">Elimina</string>
 	<!-- #endregion -->
 	
 	<!-- #region SYSTEM -->
 	<string name="layout_content_description">Sfondo</string>
-	<string name="admin_pw">P4$$w0rd.</string>
 	<!-- #endregion -->
 </resources>

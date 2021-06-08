@@ -27,7 +27,7 @@
 		<item name="android:textStyle">bold</item>
 	</style>
 	
-	<style name="loginCard" parent="parent"></style>
+	<style name="loginCard" parent="parent" />
 	
 	<style name="linearParent" parent="parent">
 		<item name="android:orientation">vertical</item>
@@ -52,8 +52,13 @@
 		<item name="android:layout_height">wrap_content</item>
 	</style>
 	
-	<style name="loginButton" parent="viewParent">
-		<item name="android:background">@drawable/login_button_bk</item>
+	<style name="genericButton" parent="viewParent">
+		<item name="android:background">@drawable/generic_button_bk</item>
+		<item name="android:textColor">@color/whiteTextColor</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="deleteButton" parent="viewParent">
+		<item name="android:background">@drawable/delete_button_bk</item>
 		<item name="android:textColor">@color/whiteTextColor</item>
 		<item name="android:textStyle">bold</item>
 	</style>

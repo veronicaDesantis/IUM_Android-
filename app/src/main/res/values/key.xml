@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- #region SYSTEM -->
+	<string name="admin_pw">P4$$w0rd.</string>
+	<string name="teacher_id">teacher_id</string>
+	<string name="deleted">deleted</string>
+	<!-- #endregion -->
+</resources>

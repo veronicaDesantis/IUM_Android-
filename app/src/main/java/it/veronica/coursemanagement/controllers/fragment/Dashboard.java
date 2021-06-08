@@ -1,4 +1,4 @@
-package it.veronica.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.dbManager;
 import com.google.android.material.chip.Chip;
 
@@ -30,24 +32,7 @@ public class Dashboard extends Fragment {
         courseChip.setText(String.valueOf(countCourse));
         Chip teacherChip = root.findViewById(R.id.teacher_kpi);
         teacherChip.setText(String.valueOf(countTeacher));
-        /*FloatingActionButton floatButton = root.findViewById(R.id.floatingActionButton);
-        floatButton.setOnTouchListener(floatButtonListener);*/
         ((RootActivity)getActivity()).getSupportActionBar().show();
         return root;
     }
-
-    /*private View.OnTouchListener floatButtonListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-
-            //Cambio fragment per il login
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, Login.class, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
-                    .commit();
-            return true;
-        }
-    };*/
 }

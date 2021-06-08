@@ -1,4 +1,4 @@
-package it.veronica.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,14 +13,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.User_type;
 import it.veronica.coursemanagement.model.dbManager;
+import it.veronica.coursemanagement.utility.AesCrypt;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import it.veronica.coursemanagement.utility.Utility;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Register extends Fragment{
+public class RegisterFragment extends Fragment{
 
     private dbManager db = null;
     private Context myContext = null;
@@ -31,11 +34,11 @@ public class Register extends Fragment{
         root = inflater.inflate(R.layout.fragment_register, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.register_page);
         TextView href_login = root.findViewById(R.id.href_login);
         href_login.setOnClickListener(hrefLoginListener);
         Button loginButton = root.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(loginButtonListener);
-        ((RootActivity)getActivity()).getSupportActionBar().hide();
         return root;
 
     }
@@ -46,7 +49,7 @@ public class Register extends Fragment{
             //Cambio fragment per il login
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, Login.class, null)
+                    .replace(R.id.nav_host_fragment, LoginFragment.class, null)
                     .setReorderingAllowed(true)
                     .addToBackStack("name") // name can be null
                     .commit();
@@ -87,7 +90,8 @@ public class Register extends Fragment{
             else {
                 User dbUser = db.GetUserByMail(email);
                 if (dbUser == null) {
-                    User user = new User(name, surname, email, password, User_type.STUDENT.getValue());
+                    String encryptedPassword = AesCrypt.encrypt(password);
+                    User user = new User(name, surname, email, encryptedPassword, User_type.STUDENT.getValue());
                     int user_id = db.InsertUser(user);
                     if (user_id == -1) {
                         emailTextInput.setError(getResources().getString(R.string.generic_error));

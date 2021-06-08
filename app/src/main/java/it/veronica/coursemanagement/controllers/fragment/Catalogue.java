@@ -1,4 +1,4 @@
-package it.veronica.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.dbManager;
 
 public class Catalogue extends Fragment {

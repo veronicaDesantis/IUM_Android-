@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<LinearLayout
+		style="@style/linearParent"
+		android:orientation="vertical"
+		android:padding="@dimen/loginViewsMargin">
+		<LinearLayout
+			style="@style/linearParent"
+			android:layout_gravity="center"
+			android:orientation="horizontal"
+			android:padding="@dimen/loginViewsMargin">
+			<TextView
+				android:id="@+id/teacherName"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_weight="1"
+				android:text="@string/course_kpi"
+				android:textSize="18sp" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

@@ -1,15 +1,23 @@
 package it.veronica.coursemanagement.controllers;
 
 import android.os.Bundle;
+import android.text.BoringLayout;
 import android.view.MenuItem;
 
 import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.controllers.fragment.Catalogue;
+import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
+import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
+import it.veronica.coursemanagement.controllers.fragment.TeacherFragment;
 import it.veronica.coursemanagement.model.User_type;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,6 +34,7 @@ public class RootActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ManageExtra();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,57 +54,30 @@ public class RootActivity extends AppCompatActivity {
         } else {
             navigationView.inflateMenu(R.menu.guest_menu);
         }
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    // Handle navigation view item clicks here.
-                    int id = item.getItemId();
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-
-                    if (id == R.id.catalogue) {
-                        //Cambio fragment per il catalogo
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.nav_host_fragment, Catalogue.class, null)
-                                .setReorderingAllowed(true)
-                                .addToBackStack("name") // name can be null
-                                .commit();
-                    }
-                    else if (id == R.id.login){
-                        //Cambio fragment per il login
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.nav_host_fragment, Login.class, null)
-                                .setReorderingAllowed(true)
-                                .addToBackStack("name") // name can be null
-                                .commit();
-                    }
-                    else if(id == R.id.logout){
-                        //Cambio fragment per il logout
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.nav_host_fragment, Logout.class, null)
-                                .setReorderingAllowed(true)
-                                .addToBackStack("name") // name can be null
-                                .commit();
-                    }
-                    return true;
-            }
-        });
+        navigationView.setNavigationItemSelectedListener(navigationItemSelectedListener);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_dashboard /*, R.id.nav_gallery, R.id.nav_slideshow*/)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        //NavigationUI.setupWithNavController(navigationView, navController);*/
     }
 
-
-
-
+    private void ManageExtra()
+    {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            return;
+        }
+        else
+        {
+            Boolean log_out = extras.getBoolean("log_out");
+            if (log_out) {
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.logout_done), Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        }
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -103,4 +85,77 @@ public class RootActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public NavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            // Handle navigation view item clicks here.
+            int id = item.getItemId();
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            if (id == R.id.catalogue) {
+                //Cambio fragment per il catalogo
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, Catalogue.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(Catalogue.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.teacher)
+            {
+                //Cambio fragment per la lista docenti
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, TeacherFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(TeacherFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.login){
+                //Cambio fragment per il login
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, LoginFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(LoginFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if(id == R.id.logout){
+                //Cambio fragment per il logout
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .replace(R.id.nav_host_fragment, LogoutFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(LogoutFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            return true;
+        }
+    };
 }

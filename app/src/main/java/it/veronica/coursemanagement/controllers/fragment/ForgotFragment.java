@@ -1,4 +1,4 @@
-package it.veronica.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,13 +12,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.dbManager;
+import it.veronica.coursemanagement.utility.AesCrypt;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import it.veronica.coursemanagement.utility.Utility;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Forgot extends Fragment {
+public class ForgotFragment extends Fragment {
 
     private dbManager db = null;
     private Context myContext = null;
@@ -32,10 +35,10 @@ public class Forgot extends Fragment {
         root = inflater.inflate(R.layout.fragment_forgot, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.forgot_page);
         verify_btn = root.findViewById(R.id.verify_btn);
         verify_btn.setOnClickListener(verifyBtnListener);
         user_id = 0;
-        ((RootActivity)getActivity()).getSupportActionBar().hide();
         return root;
     }
 
@@ -78,7 +81,7 @@ public class Forgot extends Fragment {
         @Override
         public void onClick(View v) {
             TextInputLayout textInputPassword = root.findViewById(R.id.textInputPassword);
-            TextInputLayout textInputConfirmPassword= root.findViewById(R.id.textInputConfirmPassword);
+            TextInputLayout textInputConfirmPassword = root.findViewById(R.id.textInputConfirmPassword);
             String password = textInputPassword.getEditText().getText().toString();
             String confirmPassword = textInputConfirmPassword.getEditText().getText().toString();
             if (Utility.IsPasswordValid(password)) {
@@ -91,7 +94,8 @@ public class Forgot extends Fragment {
             else
             {
                 //Aggiorno la pw
-                db.UpdatePassword(user_id, password);
+                String encryptedPassword = AesCrypt.encrypt(password);
+                db.UpdatePassword(user_id, encryptedPassword);
                 PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
                 User user = db.GetUserById(user_id);
                 preferencesManager.PutPreferenceByKey("User_id", String.valueOf(user_id));

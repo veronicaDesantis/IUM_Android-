@@ -1,43 +1,50 @@
-package it.veronica.coursemanagement.controllers;
+package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
+
+import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.dbManager;
 import it.veronica.coursemanagement.utility.AesCrypt;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class Login extends Fragment {
+public class LoginFragment extends Fragment {
 
     private dbManager db = null;
     private Context myContext = null;
     private View root;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public View onCreateView(@NonNull LayoutInflater inflater,
-                              ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_login, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.login_page);
         Button btn_login = root.findViewById(R.id.login_btn);
         btn_login.setOnClickListener(btnLoginListener);
         TextView href_register = root.findViewById(R.id.href_register);
         href_register.setOnClickListener(hrefRegisterListener);
         TextView href_forgot_password = root.findViewById(R.id.href_forgot_password);
         href_forgot_password.setOnClickListener(hrefForgotListener);
-        ((RootActivity)getActivity()).getSupportActionBar().hide();
         return root;
     }
 
@@ -59,7 +66,6 @@ public class Login extends Fragment {
             {
                 //cifro la password
                 String ecryptedPassword = AesCrypt.encrypt(textPassword);
-                //ecryptedPassword = ecryptedPassword.replace("\n", "").replace("\r", "");
                 User dbUser = db.GetUserByMail_Password(textEmail, ecryptedPassword);
                 if (dbUser != null)
                 {
@@ -83,7 +89,7 @@ public class Login extends Fragment {
             //Cambio fragment per il login
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, Register.class, null)
+                    .replace(R.id.nav_host_fragment, RegisterFragment.class, null)
                     .setReorderingAllowed(true)
                     .addToBackStack("name") // name can be null
                     .commit();
@@ -96,7 +102,7 @@ public class Login extends Fragment {
             //Cambio fragment per il login
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, Forgot.class, null)
+                    .replace(R.id.nav_host_fragment, ForgotFragment.class, null)
                     .setReorderingAllowed(true)
                     .addToBackStack("name") // name can be null
                     .commit();

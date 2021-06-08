@@ -42,7 +42,7 @@
 		android:layout_marginRight="32dp"
 		android:layout_marginBottom="32dp"
 		android:clickable="true"
-		android:src="@drawable/ic_login_in"
+		android:src="@drawable/ic_login"
 		app:backgroundTint="@color/colorPrimaryDark"
 		app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
 		app:layout_constraintEnd_toEndOf="@+id/relativeLayout"

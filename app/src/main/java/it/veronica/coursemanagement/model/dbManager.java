@@ -39,12 +39,26 @@ public class dbManager {
         return (int)id;
     }
 
+    public void UpdateMail(int user_id, String email)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email", email);
+        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+    }
+
     public void UpdatePassword(int user_id, String password)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("password", password);
         db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+    }
+
+    public void DeleteUser(int id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(User.class.getSimpleName(), "id="+String.valueOf(id), null);
     }
 
     public User GetUserById(int user_id)
@@ -136,6 +150,41 @@ public class dbManager {
 
     //#region TEACHER
 
+    public int InsertTeacher(Teacher teacher)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", teacher.getName());
+        contentValues.put("surname", teacher.getSurname());
+        contentValues.put("user_id", teacher.getUser_id());
+        long id = 0;
+        try
+        {
+            id = db.insert(Teacher.class.getSimpleName(), null, contentValues);
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println(sqle.getMessage());
+            return -1;
+        }
+        return (int)id;
+    }
+
+    public void UpdateTeacher(int id, String name, String surname)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("surname", surname);
+        db.update(Teacher.class.getSimpleName(), contentValues, "id="+String.valueOf(id), null);
+    }
+
+    public void DeleteTeacher(int id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(Teacher.class.getSimpleName(), "id="+String.valueOf(id), null);
+    }
+
     public int CountTeacher()
     {
         return GetAllTeacher().length;
@@ -144,7 +193,7 @@ public class dbManager {
     public Teacher[] GetAllTeacher()
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cur = db.query(Teacher.class.getSimpleName(), new String[]{"id", "name", "surname"}, null, null, null, null, "");
+        Cursor cur = db.query(Teacher.class.getSimpleName(), new String[]{"id", "name", "surname", "user_id"}, null, null, null, null, "");
         ArrayList<Teacher> listItems = new ArrayList<Teacher>();
         if (cur != null && cur.moveToFirst())
         {
@@ -156,6 +205,19 @@ public class dbManager {
         Teacher[] arrItems = new Teacher[cur.getCount()];
         arrItems = listItems.toArray(arrItems);
         return arrItems;
+    }
+
+    public Teacher GetTeacherById(int teacher_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Teacher.class.getSimpleName(), new String[]{"id", "name", "surname", "user_id"}, "id like ?", new String[]{ String.valueOf(teacher_id) }, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readTeacher(cur);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public Teacher readTeacher(Cursor cur){

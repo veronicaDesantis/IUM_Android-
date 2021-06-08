@@ -9,25 +9,19 @@
 	android:fitsSystemWindows="true"
 	tools:openDrawer="start">
 	
-	<androidx.coordinatorlayout.widget.CoordinatorLayout
+	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
-	
-		<com.google.android.material.appbar.AppBarLayout
+		android:layout_height="wrap_content"
+		android:theme="@style/Theme.CourseManagement.AppBarOverlay"
+		android:background="@android:color/transparent">
+		
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/Theme.CourseManagement.AppBarOverlay"
-			android:background="@android:color/transparent">
-			
-			<androidx.appcompat.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="@drawable/login_shape_bk"
-				android:minHeight="?attr/actionBarSize"
-				android:theme="?attr/actionBarTheme" />
-		
-		</com.google.android.material.appbar.AppBarLayout>
+			android:background="@drawable/side"
+			android:minHeight="?attr/actionBarSize"
+			android:theme="?attr/actionBarTheme" />
 		
 		<fragment
 			android:id="@+id/nav_host_fragment"
@@ -40,8 +34,8 @@
 			app:layout_constraintTop_toTopOf="parent"
 			app:navGraph="@navigation/mobile_navigation" />
 	
-	</androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+	</com.google.android.material.appbar.AppBarLayout>
+	
 	<com.google.android.material.navigation.NavigationView
 		android:id="@+id/nav_view"
 		android:layout_width="wrap_content"
