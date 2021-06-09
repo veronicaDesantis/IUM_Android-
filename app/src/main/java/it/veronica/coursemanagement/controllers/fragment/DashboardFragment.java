@@ -15,7 +15,7 @@ import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.dbManager;
 import com.google.android.material.chip.Chip;
 
-public class Dashboard extends Fragment {
+public class DashboardFragment extends Fragment {
 
     private dbManager  db = null;
     private Context myContext = null;

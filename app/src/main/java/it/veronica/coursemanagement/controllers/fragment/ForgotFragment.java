@@ -102,7 +102,7 @@ public class ForgotFragment extends Fragment {
                 preferencesManager.PutPreferenceByKey("User_type_id", String.valueOf(user.getUser_type_id()));
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, Dashboard.class, null)
+                        .replace(R.id.nav_host_fragment, DashboardFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // name can be null
                         .commit();

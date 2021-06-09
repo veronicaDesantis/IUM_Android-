@@ -39,6 +39,16 @@ public class dbManager {
         return (int)id;
     }
 
+    public void UpdateUser(int user_id, String name, String surname, String email)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("surname", surname);
+        contentValues.put("email", email);
+        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+    }
+
     public void UpdateMail(int user_id, String email)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -59,6 +69,23 @@ public class dbManager {
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(User.class.getSimpleName(), "id="+String.valueOf(id), null);
+    }
+
+    public User[] GetAllUser()
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(User.class.getSimpleName(), new String[]{"id", "name", "surname", "email", "password", "user_type_id"}, null, null, null, null, "");
+        ArrayList<User> listItems = new ArrayList<User>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readUser(cur));
+            }while (cur.moveToNext());
+        }
+
+        User[] arrItems = new User[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
     }
 
     public User GetUserById(int user_id)
@@ -105,6 +132,7 @@ public class dbManager {
         user.setId(cur.getInt(cur.getColumnIndex("id")));
         user.setName(cur.getString(cur.getColumnIndex("name")));
         user.setSurname(cur.getString(cur.getColumnIndex("surname")));
+        user.setEmail(cur.getString(cur.getColumnIndex("email")));
         user.setPassword(cur.getString(cur.getColumnIndex("password")));
         user.setUser_type_id(cur.getInt(cur.getColumnIndex("user_type_id")));
         return user;
@@ -272,11 +300,12 @@ public class dbManager {
     }
 
     public Teacher readTeacher(Cursor cur){
-        Teacher course = new Teacher();
-        course.setId(cur.getInt(cur.getColumnIndex("id")));
-        course.setName(cur.getString(cur.getColumnIndex("name")));
-        course.setSurname(cur.getString(cur.getColumnIndex("surname")));
-        return course;
+        Teacher teacher = new Teacher();
+        teacher.setId(cur.getInt(cur.getColumnIndex("id")));
+        teacher.setName(cur.getString(cur.getColumnIndex("name")));
+        teacher.setSurname(cur.getString(cur.getColumnIndex("surname")));
+        teacher.setUser_id(cur.getInt(cur.getColumnIndex("user_id")));
+        return teacher;
     }
 
     //#endregion

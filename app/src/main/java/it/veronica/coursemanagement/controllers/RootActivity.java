@@ -1,16 +1,17 @@
 package it.veronica.coursemanagement.controllers;
 
 import android.os.Bundle;
-import android.text.BoringLayout;
 import android.view.MenuItem;
 
 import com.example.coursemanagement.R;
 
 import it.veronica.coursemanagement.controllers.fragment.Catalogue;
 import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
+import it.veronica.coursemanagement.controllers.fragment.DashboardFragment;
 import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
 import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
 import it.veronica.coursemanagement.controllers.fragment.TeacherFragment;
+import it.veronica.coursemanagement.controllers.fragment.UserFragment;
 import it.veronica.coursemanagement.model.User_type;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import com.google.android.material.navigation.NavigationView;
@@ -18,7 +19,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -128,7 +128,7 @@ public class RootActivity extends AppCompatActivity {
             }
             else if (id == R.id.course)
             {
-                //Cambio fragment per la lista docenti
+                //Cambio fragment per la lista corsi
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .setCustomAnimations(
@@ -140,6 +140,37 @@ public class RootActivity extends AppCompatActivity {
                         .add(R.id.nav_host_fragment, CourseFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(CourseFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.user)
+            {
+                //Cambio fragment per la lista utenti
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, UserFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(UserFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.dashboard){
+                //Cambio fragment per la dashboard
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, DashboardFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(DashboardFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.login){

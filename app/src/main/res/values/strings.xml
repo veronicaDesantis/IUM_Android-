@@ -73,6 +73,7 @@
 	<string name="dashboard_page">Dashboard</string>
 	<string name="teacher_page">Docenti</string>
 	<string name="course_page">Corsi</string>
+	<string name="user_page">Utenti</string>
 	<!-- endregion -->
 	
 	<string name="no_result">Nessun risultato</string>
@@ -96,7 +97,22 @@
 	<string name="course_cfu">CFU</string>
 	<!-- endregion -->
 	
-	<!-- #region BUTTON -->
+	<!-- region USER -->
+	<string name="user_new">Creazione utente</string>
+	<string name="user_detail">Dettaglio utente</string>
+	<string name="user_edit">Modifica utente</string>
+	<string name="user_name">Nome</string>
+	<string name="user_surname">Cognome</string>
+	<string name="user_mail">Mail</string>
+	<!-- endregion -->
+	
+	<!-- region USER TYPE -->
+	<string name="user_type_student">Studente</string>
+	<string name="user_type_teacher">Docente</string>
+	<string name="user_type_admin">Amministratore</string>
+	<!-- endregion -->
+	
+	<!-- region BUTTON -->
 	<string name="login_btn">Login</string>
 	<string name="register_btn">Registrati</string>
 	<string name="verify_btn">Verifica</string>
@@ -105,9 +121,9 @@
 	<string name="edit_btn">Modifica</string>
 	<string name="save_btn">Salva</string>
 	<string name="delete_btn">Elimina</string>
-	<!-- #endregion -->
+	<!-- endregion -->
 	
-	<!-- #region SYSTEM -->
+	<!-- region SYSTEM -->
 	<string name="layout_content_description">Sfondo</string>
-	<!-- #endregion -->
+	<!-- endregion -->
 </resources>

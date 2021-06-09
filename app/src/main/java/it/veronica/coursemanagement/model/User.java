@@ -1,5 +1,9 @@
 package it.veronica.coursemanagement.model;
 
+import android.renderscript.RSRuntimeException;
+
+import com.google.android.material.navigation.NavigationView;
+
 public class User
 {
     public int Id;
@@ -49,6 +53,8 @@ public class User
     public void setSurname(String surname) {
         Surname = surname;
     }
+
+    public String getFullName() {return Surname + " " + Name; }
 
     public String getEmail() {
         return Email;

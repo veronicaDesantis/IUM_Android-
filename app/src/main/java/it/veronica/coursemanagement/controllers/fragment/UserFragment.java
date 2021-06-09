@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import it.veronica.coursemanagement.adapters.CourseAdapter;
+import it.veronica.coursemanagement.adapters.UserAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Course;
-import it.veronica.coursemanagement.model.Teacher;
+import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.dbManager;
 
-public class CourseFragment extends Fragment {
+public class UserFragment extends Fragment {
 
     private View root = null;
     private dbManager  db = null;
@@ -34,19 +35,19 @@ public class CourseFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_course, container, false);
+        root = inflater.inflate(R.layout.fragment_user, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
-        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.course_page);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.user_page);
 
-        Course[] courses = db.GetAllCourse();
-        ArrayList<Course> list1 = new ArrayList<Course>();
-        Collections.addAll(list1, courses);
-        CourseAdapter adapter = new CourseAdapter(getActivity(), list1);
-        ListView listView = root.findViewById(R.id.course_list_view);
+        User[] users = db.GetAllUser();
+        ArrayList<User> list1 = new ArrayList<User>();
+        Collections.addAll(list1, users);
+        UserAdapter adapter = new UserAdapter(getActivity(), list1);
+        ListView listView = root.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter_click_listener);
-        if (courses.length == 0)
+        if (users.length == 0)
         {
             root.findViewById(R.id.no_result).setVisibility(View.VISIBLE);
             listView.setVisibility(View.INVISIBLE);
@@ -57,8 +58,8 @@ public class CourseFragment extends Fragment {
             listView.setVisibility(View.VISIBLE);
         }
 
-        FloatingActionButton teacher_add = root.findViewById(R.id.add);
-        teacher_add.setOnTouchListener(add_listener);
+        FloatingActionButton add = root.findViewById(R.id.add);
+        add.setOnTouchListener(add_listener);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -74,17 +75,17 @@ public class CourseFragment extends Fragment {
     public AdapterView.OnItemClickListener adapter_click_listener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Course course = (Course) adapterView.getItemAtPosition(i);
+            User user = (User) adapterView.getItemAtPosition(i);
             //Ricarico il fragment con il nuovo id, per visualizzare i dettagli del docente creato
-            Fragment courseRegistryFragment = new CourseRegistryFragment();
+            Fragment userRegistryFragment = new UserRegistryFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt(getResources().getString(R.string.course_id), course.getId());
-            courseRegistryFragment.setArguments(bundle);
+            bundle.putInt(getResources().getString(R.string.user_id), user.getId());
+            userRegistryFragment.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, courseRegistryFragment, null)
+                    .replace(R.id.nav_host_fragment, userRegistryFragment, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack(CourseRegistryFragment.class.getName()) // name can be null
+                    .addToBackStack(UserRegistryFragment.class.getName()) // name can be null
                     .commit();
         }
     };
@@ -94,9 +95,9 @@ public class CourseFragment extends Fragment {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, CourseRegistryFragment.class, null)
+                    .replace(R.id.nav_host_fragment, UserRegistryFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack(CourseRegistryFragment.class.getName()) // name can be null
+                    .addToBackStack(UserRegistryFragment.class.getName()) // name can be null
                     .commit();
             return true;
         }
