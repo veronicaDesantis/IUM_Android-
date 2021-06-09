@@ -7,6 +7,20 @@ public class Course {
     public String Description;
     public int Cfu;
 
+    //#region CTR
+
+    public Course(){}
+
+    public Course(String code, String title, String description, int cfu) {
+        Code = code;
+        Title = title;
+        Description = description;
+        Cfu = cfu;
+    }
+
+
+    //#endregion
+
     //#region GETTER and SETTER
 
     public int getId() {

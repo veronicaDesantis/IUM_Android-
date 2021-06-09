@@ -8,7 +8,10 @@
 	<string name="menu_slideshow">Slideshow</string>
 	
 	<string name="preferencesManager">session</string>
-	<!-- #region USER MANAGEMENT -->
+	
+	<string name="required">Valorizzare il campo</string>
+	
+	<!-- region HINT -->
 	<string name="name_hint">Nome</string>
 	<string name="surname_hint">Cognome</string>
 	<string name="email_hint">Email</string>
@@ -17,7 +20,13 @@
 	<string name="forgot_password_hint">Password dimenticata?</string>
 	<string name="signup_login_hint">Hai già un account? Accedi</string>
 	<string name="login_signup_hint">Non hai un account? Registrati</string>
+	<string name="code_hint">Codice</string>
+	<string name="title_hint">Titolo</string>
+	<string name="description_hint">Descrizione</string>
+	<string name="cfu_hint">CFU</string>
+	<!-- endregion -->
 	
+	<!-- region USER MANAGEMENT -->
 	<string name="user_error">Le credenziali risultano errate</string>
 	<string name="email_error">Inserire l\'email</string>
 	<string name="email_in_db_error">Email già registrata</string>
@@ -28,23 +37,23 @@
 	<string name="surname_error">Inserire il cognome</string>
 	<string name="password_validity_error">Inserire una password valida</string>
 	<string name="password_confirm_error">Le due password non corrispondono</string>
-	<!-- #endregion My Region -->
+	<!-- endregion My Region -->
 	
-	<!-- #region EVENT -->
+	<!-- region EVENT -->
 	<string name="logout_done">Logout correttamente effettuato</string>
 	<string name="login_done">Bentornato!</string>
 	<string name="register_done">Benvenuto!</string>
 	<string name="create_done">Oggetto creato</string>
 	<string name="edit_done">Modifica effettuata</string>
 	<string name="delete_done">Oggetto eliminato</string>
-	<!-- #endregion -->
+	<!-- endregion -->
 	
-	<!-- #region DASHBOARD -->
+	<!-- region DASHBOARD -->
 	<string name="course_kpi">Totale corsi</string>
 	<string name="teacher_kpi">Totale docenti</string>
-	<!-- #endregion -->
+	<!-- endregion -->
 	
-	<!-- #region MENU -->
+	<!-- region MENU -->
 	<string name="dashboard_menu">Dashboard</string>
 	<string name="course_menu">Corsi</string>
 	<string name="teacher_menu">Docenti</string>
@@ -54,26 +63,38 @@
 	<string name="catalogue_menu">Catalogo</string>
 	<string name="logout_menu">Logout</string>
 	<string name="login_menu">Login</string>
-	<!-- #endregion -->
+	<!-- endregion -->
 	
-	<!-- #region PAGE TITLE -->
+	<!-- region PAGE TITLE -->
 	<string name="app_name">Gestione corsi</string>
 	<string name="login_page">Login</string>
 	<string name="register_page">Registrati</string>
 	<string name="forgot_page">Recupera password</string>
 	<string name="dashboard_page">Dashboard</string>
 	<string name="teacher_page">Docenti</string>
-	<!-- #endregion -->
+	<string name="course_page">Corsi</string>
+	<!-- endregion -->
 	
-	<!-- #region TEACHER -->
-	<string name="teacher_no_result">Nessun risultato</string>
+	<string name="no_result">Nessun risultato</string>
+	
+	<!-- region TEACHER -->
 	<string name="teacher_new">Creazione docente</string>
 	<string name="teacher_detail">Dettaglio docente</string>
 	<string name="teacher_edit">Modifica docente</string>
 	<string name="teacher_name">Nome</string>
 	<string name="teacher_surname">Cognome</string>
 	<string name="teacher_email">Email</string>
-	<!-- #endregion -->
+	<!-- endregion -->
+	
+	<!-- region COURSE -->
+	<string name="course_new">Creazione corso</string>
+	<string name="course_detail">Dettaglio corso</string>
+	<string name="course_edit">Modifica corso</string>
+	<string name="course_code">Codice</string>
+	<string name="course_title">Titolo</string>
+	<string name="course_description">Descrizione</string>
+	<string name="course_cfu">CFU</string>
+	<!-- endregion -->
 	
 	<!-- #region BUTTON -->
 	<string name="login_btn">Login</string>

@@ -114,6 +114,44 @@ public class dbManager {
 
     //#region COURSE
 
+    public int InsertCourse(Course course)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("code", course.getCode());
+        contentValues.put("title", course.getTitle());
+        contentValues.put("description", course.getDescription());
+        contentValues.put("cfu", course.getCfu());
+        long id = 0;
+        try
+        {
+            id = db.insert(Course.class.getSimpleName(), null, contentValues);
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println(sqle.getMessage());
+            return -1;
+        }
+        return (int)id;
+    }
+
+    public void UpdateCourse(int id, String code, String title, String description, String cfu)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("code", code);
+        contentValues.put("title", title);
+        contentValues.put("description", description);
+        contentValues.put("cfu",cfu);
+        db.update(Course.class.getSimpleName(), contentValues, "id="+String.valueOf(id), null);
+    }
+
+    public void DeleteCourse(int id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(Course.class.getSimpleName(), "id="+String.valueOf(id), null);
+    }
+
     public int CountCourse()
     {
         return GetAllCourse().length;
@@ -134,6 +172,19 @@ public class dbManager {
         Course[] arrItems = new Course[cur.getCount()];
         arrItems = listItems.toArray(arrItems);
         return arrItems;
+    }
+
+    public Course GetCourseById(int course_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Course.class.getSimpleName(), new String[]{"id", "code", "title", "description", "cfu"}, "id like ?", new String[]{ String.valueOf(course_id) }, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readCourse(cur);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public Course readCourse(Cursor cur){

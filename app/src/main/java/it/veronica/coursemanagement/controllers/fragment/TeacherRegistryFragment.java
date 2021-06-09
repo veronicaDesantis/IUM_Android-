@@ -30,7 +30,7 @@ import it.veronica.coursemanagement.utility.FormEnum;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 import it.veronica.coursemanagement.utility.Utility;
 
-public class TeacherRegisrtyFragment extends Fragment {
+public class TeacherRegistryFragment extends Fragment {
 
     private View root = null;
     private dbManager  db = null;
@@ -76,7 +76,8 @@ public class TeacherRegisrtyFragment extends Fragment {
                 surnameTextInput.getEditText().setText(teacher.getSurname());
                 surnameTextInput.setFocusable(false);
                 surnameTextInput.setEnabled(false);
-                emailTextInput.getEditText().setText("email");
+                User user = db.GetUserById(teacher.getUser_id());
+                emailTextInput.getEditText().setText(user.getEmail());
                 emailTextInput.setFocusable(false);
                 emailTextInput.setEnabled(false);
                 idTextInput.getEditText().setText(String.valueOf(teacher.getId()));
@@ -169,6 +170,10 @@ public class TeacherRegisrtyFragment extends Fragment {
                         //Creo anche il docente
                         Teacher teacher = new Teacher(name, surname, user_id);
                         int teacher_id = db.InsertTeacher(teacher);
+                        TextInputLayout idTextInput = root.findViewById(R.id.idTextInput);
+                        idTextInput.getEditText().setText(String.valueOf(teacher_id));
+                        TextInputLayout userIdTextInput = root.findViewById(R.id.userIdTextInput);
+                        userIdTextInput.getEditText().setText(String.valueOf(user_id));
                         formEnum = FormEnum.DETAIL;
                         ToogleDetail(formEnum);
                         Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.create_done), Snackbar.LENGTH_LONG);
@@ -259,9 +264,9 @@ public class TeacherRegisrtyFragment extends Fragment {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, TeacherFragment.class, null)
+                    .replace(R.id.nav_host_fragment, CourseFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack(TeacherFragment.class.getName()) // name can be null
+                    .addToBackStack(CourseFragment.class.getName()) // name can be null
                     .commit();
             return  true;
         }

@@ -8,31 +8,37 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.coursemanagement.R;
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 
+import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Teacher;
 
-public class TeacherAdapter extends ArrayAdapter<Teacher> {
+public class CourseAdapter extends ArrayAdapter<Course> {
 
-    public TeacherAdapter(Context context, ArrayList<Teacher> teachers) {
-        super(context, 0, teachers);
+    public CourseAdapter(Context context, ArrayList<Course> courses) {
+        super(context, 0, courses);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
-        Teacher teacher = getItem(position);
+        Course course = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.simple_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.multiple_list_item, parent, false);
         }
 
         // Lookup view for data population
-        TextView teacherName = (TextView) convertView.findViewById(R.id.name);
+        TextView name = (TextView)convertView.findViewById(R.id.name);
+        Chip chip = (Chip)convertView.findViewById(R.id.chip);
+        TextView description = (TextView)convertView.findViewById(R.id.description);
         // Populate the data into the template view using the data object
-        teacherName.setText(teacher.getFullName());
+        name.setText(course.getTitle());
+        chip.setText(String.valueOf(course.getCfu()));
+        description.setText(course.getDescription());
         // Return the completed view to render on screen
         return convertView;
 

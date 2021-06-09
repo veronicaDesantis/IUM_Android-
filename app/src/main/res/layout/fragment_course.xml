@@ -9,7 +9,7 @@
 	android:orientation="vertical">
 	
 	<ListView
-		android:id="@+id/teacher_list_view"
+		android:id="@+id/course_list_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +27,8 @@
 		android:layout_marginTop="32dp"
 		android:text="@string/no_result"
 		android:visibility="visible"
-		app:layout_constraintStart_toStartOf="@id/teacher_list_view"
-		app:layout_constraintTop_toTopOf="@id/teacher_list_view" />
+		app:layout_constraintStart_toStartOf="@id/course_list_view"
+		app:layout_constraintTop_toTopOf="@id/course_list_view" />
 	
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:id="@+id/teacher_add"
@@ -41,8 +41,8 @@
 		android:src="@drawable/ic_add"
 		app:tint="@color/white"
 		app:backgroundTint="@color/colorPrimaryDark"
-		app:layout_constraintBottom_toBottomOf="@id/teacher_list_view"
-		app:layout_constraintEnd_toEndOf="@id/teacher_list_view" />
+		app:layout_constraintBottom_toBottomOf="@id/course_list_view"
+		app:layout_constraintEnd_toEndOf="@id/course_list_view" />
 	
 
 </androidx.constraintlayout.widget.ConstraintLayout>

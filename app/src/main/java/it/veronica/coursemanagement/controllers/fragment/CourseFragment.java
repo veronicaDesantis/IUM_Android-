@@ -20,12 +20,13 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import it.veronica.coursemanagement.adapters.TeacherAdapter;
+import it.veronica.coursemanagement.adapters.CourseAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
+import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Teacher;
 import it.veronica.coursemanagement.model.dbManager;
 
-public class TeacherFragment extends Fragment {
+public class CourseFragment extends Fragment {
 
     private View root = null;
     private dbManager  db = null;
@@ -33,19 +34,19 @@ public class TeacherFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_teacher, container, false);
+        root = inflater.inflate(R.layout.fragment_course, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
-        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.teacher_page);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.course_page);
 
-        Teacher[] teachers = db.GetAllTeacher();
-        ArrayList<Teacher> list1 = new ArrayList<Teacher>();
-        Collections.addAll(list1, teachers);
-        TeacherAdapter adapter = new TeacherAdapter(getActivity(), list1);
-        ListView listView = root.findViewById(R.id.teacher_list_view);
+        Course[] courses = db.GetAllCourse();
+        ArrayList<Course> list1 = new ArrayList<Course>();
+        Collections.addAll(list1, courses);
+        CourseAdapter adapter = new CourseAdapter(getActivity(), list1);
+        ListView listView = root.findViewById(R.id.course_list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter_click_listener);
-        if (teachers.length == 0)
+        if (courses.length == 0)
         {
             root.findViewById(R.id.no_result).setVisibility(View.VISIBLE);
             listView.setVisibility(View.INVISIBLE);
@@ -73,17 +74,17 @@ public class TeacherFragment extends Fragment {
     public AdapterView.OnItemClickListener adapter_click_listener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Teacher teacher = (Teacher)adapterView.getItemAtPosition(i);
+            Course course = (Course) adapterView.getItemAtPosition(i);
             //Ricarico il fragment con il nuovo id, per visualizzare i dettagli del docente creato
-            Fragment teacherTegisryFragment = new TeacherRegistryFragment();
+            Fragment courseRegistryFragment = new CourseRegistryFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt(getResources().getString(R.string.teacher_id), teacher.getId());
-            teacherTegisryFragment.setArguments(bundle);
+            bundle.putInt(getResources().getString(R.string.course_id), course.getId());
+            courseRegistryFragment.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, teacherTegisryFragment, null)
+                    .replace(R.id.nav_host_fragment, courseRegistryFragment, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack(TeacherRegistryFragment.class.getName()) // name can be null
+                    .addToBackStack(CourseRegistryFragment.class.getName()) // name can be null
                     .commit();
         }
     };
@@ -93,9 +94,9 @@ public class TeacherFragment extends Fragment {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, TeacherRegistryFragment.class, null)
+                    .replace(R.id.nav_host_fragment, CourseRegistryFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack(TeacherRegistryFragment.class.getName()) // name can be null
+                    .addToBackStack(CourseRegistryFragment.class.getName()) // name can be null
                     .commit();
             return true;
         }

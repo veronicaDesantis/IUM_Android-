@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import com.example.coursemanagement.R;
 
 import it.veronica.coursemanagement.controllers.fragment.Catalogue;
+import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
 import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
 import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
 import it.veronica.coursemanagement.controllers.fragment.TeacherFragment;
@@ -123,6 +124,22 @@ public class RootActivity extends AppCompatActivity {
                         .add(R.id.nav_host_fragment, TeacherFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(TeacherFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.course)
+            {
+                //Cambio fragment per la lista docenti
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, CourseFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(CourseFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.login){
