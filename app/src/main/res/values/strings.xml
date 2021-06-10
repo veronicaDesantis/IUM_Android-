@@ -49,6 +49,7 @@
 	<string name="edit_done">Modifica effettuata</string>
 	<string name="delete_done">Oggetto eliminato</string>
 	<string name="password_changed">Password modificata</string>
+	<string name="associated_done">Associazione avvenuta</string>
 	<!-- endregion -->
 	
 	<!-- region DASHBOARD -->
@@ -59,6 +60,7 @@
 	<!-- region MENU -->
 	<string name="dashboard_menu">Dashboard</string>
 	<string name="course_menu">Corsi</string>
+	<string name="teacher_course_menu">Corsi personali</string>
 	<string name="teacher_menu">Docenti</string>
 	<string name="user_menu">Utenti registrati</string>
 	<string name="calendar_menu">Calendario</string>
@@ -76,12 +78,14 @@
 	<string name="dashboard_page">Dashboard</string>
 	<string name="teacher_page">Docenti</string>
 	<string name="course_page">Corsi</string>
+	<string name="teacher_course_page">Corsi personali</string>
 	<string name="user_page">Utenti</string>
 	<string name="profile_page">Profilo personale</string>
 	<string name="password_page">Modifica password</string>
 	<!-- endregion -->
 	
 	<string name="no_result">Nessun risultato</string>
+	<string name="nothing_associated">Nessuna associazione</string>
 	
 	<!-- region TEACHER -->
 	<string name="teacher_new">Creazione docente</string>

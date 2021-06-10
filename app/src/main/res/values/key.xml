@@ -9,5 +9,6 @@
 	<string name="deleted">deleted</string>
 	<string name="pw_changed">pw_changed</string>
 	<string name="logged_out">logged_out</string>
+	<string name="associated">associated</string>
 	<!-- #endregion -->
 </resources>

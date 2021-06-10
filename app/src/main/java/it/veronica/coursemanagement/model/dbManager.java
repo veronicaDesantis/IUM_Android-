@@ -47,7 +47,7 @@ public class dbManager {
         contentValues.put("surname", surname);
         contentValues.put("email", email);
         contentValues.put("user_type_id", user_type_id);
-        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+        db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
     }
 
     public void UpdateUser(int user_id, String name, String surname, String email)
@@ -57,7 +57,7 @@ public class dbManager {
         contentValues.put("name", name);
         contentValues.put("surname", surname);
         contentValues.put("email", email);
-        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+        db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
     }
 
     public void UpdateMail(int user_id, String email)
@@ -65,7 +65,7 @@ public class dbManager {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
-        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+        db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
     }
 
     public void UpdatePassword(int user_id, String password)
@@ -73,7 +73,7 @@ public class dbManager {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("password", password);
-        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+        db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
     }
 
     public void DeleteUser(int id)
@@ -226,6 +226,51 @@ public class dbManager {
         }
     }
 
+    public Course[] GetCourseByTeacherId(int teacher_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Course.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(), new String[]{"course.id", "code", "title", "description", "cfu"},
+                "course.id == teacher_course.course_id AND teacher_course.teacher_id like ?",
+                new String[]{ String.valueOf(teacher_id) }, null, null, "");
+        ArrayList<Course> listItems = new ArrayList<Course>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readCourse(cur));
+            }while (cur.moveToNext());
+        }
+
+        Course[] arrItems = new Course[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
+    public Course[] GetCourseNotByTeacherId(int teacher_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT course.id, code, title, description, cfu, " +
+                " CASE WHEN (SELECT COUNT(*) FROM course as c INNER JOIN teacher_course ON c.id = teacher_course.course_id WHERE teacher_id LIKE ? AND c.id == course.id) == 1 THEN 1 ELSE 2 END as associated" +
+                " FROM course";
+        Cursor cur = db.rawQuery(query, new String[] { String.valueOf(teacher_id)});
+        ArrayList<Course> listItems = new ArrayList<Course>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readAssociatedCourse(cur));
+            }while (cur.moveToNext());
+        }
+
+        Course[] arrItems = new Course[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
+    public Course readAssociatedCourse(Cursor cur){
+        Course course = readCourse(cur);
+        course.setAssociated(cur.getInt(cur.getColumnIndex("associated")));
+        return course;
+    }
+
     public Course readCourse(Cursor cur){
         Course course = new Course();
         course.setId(cur.getInt(cur.getColumnIndex("id")));
@@ -272,7 +317,7 @@ public class dbManager {
     public void DeleteTeacher(int id)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete(Teacher.class.getSimpleName(), "id="+String.valueOf(id), null);
+        db.delete(Teacher.class.getSimpleName(), "id LIKE ?", new String[] { String.valueOf(id) });
     }
 
     public int CountTeacher()
@@ -310,6 +355,19 @@ public class dbManager {
         }
     }
 
+    public Teacher GetTeacherByUserId(int user_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Teacher.class.getSimpleName(), new String[]{"id", "name", "surname", "user_id"}, "user_id like ?", new String[]{ String.valueOf(user_id) }, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readTeacher(cur);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public Teacher readTeacher(Cursor cur){
         Teacher teacher = new Teacher();
         teacher.setId(cur.getInt(cur.getColumnIndex("id")));
@@ -317,6 +375,49 @@ public class dbManager {
         teacher.setSurname(cur.getString(cur.getColumnIndex("surname")));
         teacher.setUser_id(cur.getInt(cur.getColumnIndex("user_id")));
         return teacher;
+    }
+
+    //#endregion
+
+    //#region TEACHER_COURSE
+
+    public Teacher_course[] GetTeacherCourseByTeacherIdCourseId(int teacher_id, int course_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Teacher_course.class.getSimpleName(), new String[]{"id"},"teacher_id LIKE ? AND course_id LIKE ?", new String[]{ String.valueOf(teacher_id), String.valueOf(course_id) }, null, null, "");
+        ArrayList<Teacher_course> listItems = new ArrayList<Teacher_course>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readTeacherCourse(cur));
+            }while (cur.moveToNext());
+        }
+
+        Teacher_course[] arrItems = new Teacher_course[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
+    public void InsertTeacherCourse(int teacher_id, int course_id)
+    {
+        Teacher_course[] teacher_courses = GetTeacherCourseByTeacherIdCourseId(teacher_id, course_id);
+        if (teacher_courses.length == 0) {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("teacher_id", teacher_id);
+            contentValues.put("course_id", course_id);
+            db.insert(Teacher_course.class.getSimpleName(), null, contentValues);
+        }
+    }
+
+    public void DeleteTeacherCourse(int teacher_id, int course_id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(Teacher_course.class.getSimpleName(), "teacher_id LIKE ? AND course_id LIKE ?", new String[] { String.valueOf(teacher_id), String.valueOf(course_id) });
+    }
+    public Teacher_course readTeacherCourse(Cursor cur){
+        Teacher_course teacher_course = new Teacher_course();
+        return teacher_course;
     }
 
     //#endregion

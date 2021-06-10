@@ -12,6 +12,7 @@ import it.veronica.coursemanagement.controllers.fragment.DashboardFragment;
 import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
 import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
 import it.veronica.coursemanagement.controllers.fragment.ProfileFragment;
+import it.veronica.coursemanagement.controllers.fragment.TeacherCourseFragment;
 import it.veronica.coursemanagement.controllers.fragment.TeacherFragment;
 import it.veronica.coursemanagement.controllers.fragment.UserFragment;
 import it.veronica.coursemanagement.controllers.fragment.UserRegistryFragment;
@@ -123,8 +124,7 @@ public class RootActivity extends AppCompatActivity {
                         .addToBackStack(Catalogue.class.getName()) // name can be null
                         .commit();
             }
-            else if (id == R.id.teacher)
-            {
+            else if (id == R.id.teacher) {
                 //Cambio fragment per la lista docenti
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -139,8 +139,7 @@ public class RootActivity extends AppCompatActivity {
                         .addToBackStack(TeacherFragment.class.getName()) // name can be null
                         .commit();
             }
-            else if (id == R.id.course)
-            {
+            else if (id == R.id.course) {
                 //Cambio fragment per la lista corsi
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -155,8 +154,22 @@ public class RootActivity extends AppCompatActivity {
                         .addToBackStack(CourseFragment.class.getName()) // name can be null
                         .commit();
             }
-            else if (id == R.id.user)
-            {
+            else if (id == R.id.teacher_course) {
+                //Cambio fragment per la lista corsi
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, TeacherCourseFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(TeacherCourseFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.user) {
                 //Cambio fragment per la lista utenti
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -171,7 +184,7 @@ public class RootActivity extends AppCompatActivity {
                         .addToBackStack(UserFragment.class.getName()) // name can be null
                         .commit();
             }
-            else if (id == R.id.dashboard){
+            else if (id == R.id.dashboard) {
                 //Cambio fragment per la dashboard
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -186,7 +199,7 @@ public class RootActivity extends AppCompatActivity {
                         .addToBackStack(DashboardFragment.class.getName()) // name can be null
                         .commit();
             }
-            else if (id == R.id.profile_menu){
+            else if (id == R.id.profile_menu) {
                 //Cambio fragment per il profilo
                 PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
                 Fragment profileFragment = new ProfileFragment();
@@ -206,7 +219,7 @@ public class RootActivity extends AppCompatActivity {
                         .addToBackStack(ProfileFragment.class.getName()) // name can be null
                         .commit();
             }
-            else if (id == R.id.login){
+            else if (id == R.id.login) {
                 //Cambio fragment per il login
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()

@@ -7,6 +7,8 @@ public class Course {
     public String Description;
     public int Cfu;
 
+    public int Associated = 0;
+
     //#region CTR
 
     public Course(){}
@@ -16,6 +18,15 @@ public class Course {
         Title = title;
         Description = description;
         Cfu = cfu;
+    }
+
+    public Course(String code, String title, String description, int cfu, int associated)
+    {
+        Code = code;
+        Title = title;
+        Description = description;
+        Cfu = cfu;
+        Associated = associated;
     }
 
 
@@ -62,6 +73,10 @@ public class Course {
     public void setCfu(int cfu) {
         Cfu = cfu;
     }
+
+    public int getAssociated() { return Associated; }
+
+    public void setAssociated(int associated) { Associated = associated; }
 
     //#endregion
 }
