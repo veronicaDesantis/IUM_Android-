@@ -15,6 +15,7 @@
 	<string name="name_hint">Nome</string>
 	<string name="surname_hint">Cognome</string>
 	<string name="email_hint">Email</string>
+	<string name="old_password_hint">Vecchia password</string>
 	<string name="password_hint">Password</string>
 	<string name="confirm_password_hint">Conferma password</string>
 	<string name="forgot_password_hint">Password dimenticata?</string>
@@ -26,7 +27,7 @@
 	<string name="cfu_hint">CFU</string>
 	<!-- endregion -->
 	
-	<!-- region USER MANAGEMENT -->
+	<!-- region ERROR -->
 	<string name="user_error">Le credenziali risultano errate</string>
 	<string name="email_error">Inserire l\'email</string>
 	<string name="email_in_db_error">Email già registrata</string>
@@ -37,6 +38,7 @@
 	<string name="surname_error">Inserire il cognome</string>
 	<string name="password_validity_error">Inserire una password valida</string>
 	<string name="password_confirm_error">Le due password non corrispondono</string>
+	<string name="old_password_error">La vecchia password non corrisponde</string>
 	<!-- endregion My Region -->
 	
 	<!-- region EVENT -->
@@ -46,6 +48,7 @@
 	<string name="create_done">Oggetto creato</string>
 	<string name="edit_done">Modifica effettuata</string>
 	<string name="delete_done">Oggetto eliminato</string>
+	<string name="password_changed">Password modificata</string>
 	<!-- endregion -->
 	
 	<!-- region DASHBOARD -->
@@ -74,6 +77,8 @@
 	<string name="teacher_page">Docenti</string>
 	<string name="course_page">Corsi</string>
 	<string name="user_page">Utenti</string>
+	<string name="profile_page">Profilo personale</string>
+	<string name="password_page">Modifica password</string>
 	<!-- endregion -->
 	
 	<string name="no_result">Nessun risultato</string>
@@ -116,11 +121,12 @@
 	<string name="login_btn">Login</string>
 	<string name="register_btn">Registrati</string>
 	<string name="verify_btn">Verifica</string>
-	<string name="chage_pw_btn">Modifica password</string>
+	<string name="change_pw_btn">Modifica password</string>
 	<string name="create_btn">Crea</string>
 	<string name="edit_btn">Modifica</string>
 	<string name="save_btn">Salva</string>
 	<string name="delete_btn">Elimina</string>
+	<string name="confirm_btn">Conferma</string>
 	<!-- endregion -->
 	
 	<!-- region SYSTEM -->

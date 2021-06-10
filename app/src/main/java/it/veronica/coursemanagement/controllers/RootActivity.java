@@ -1,5 +1,6 @@
 package it.veronica.coursemanagement.controllers;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,15 +11,20 @@ import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
 import it.veronica.coursemanagement.controllers.fragment.DashboardFragment;
 import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
 import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
+import it.veronica.coursemanagement.controllers.fragment.ProfileFragment;
 import it.veronica.coursemanagement.controllers.fragment.TeacherFragment;
 import it.veronica.coursemanagement.controllers.fragment.UserFragment;
+import it.veronica.coursemanagement.controllers.fragment.UserRegistryFragment;
 import it.veronica.coursemanagement.model.User_type;
 import it.veronica.coursemanagement.utility.PreferencesManager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,10 +37,12 @@ import androidx.appcompat.widget.Toolbar;
 public class RootActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private Context myContext = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myContext = this;
         ManageExtra();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -43,17 +51,22 @@ public class RootActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         //Verifico il tipo di utenza
         PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), this);
-        String user_type_id = preferencesManager.GetPreferenceByKey("User_type_id");
+        String user_type_id = preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_type_id));
+        FloatingActionButton menu_type = (navigationView.getHeaderView(0)).findViewById(R.id.menu_type);
         if (user_type_id == null) {user_type_id = "0";}
         navigationView.getMenu().clear();
         if (Integer.parseInt(user_type_id) == User_type.STUDENT.getValue()) {
             navigationView.inflateMenu(R.menu.student_menu);
+            menu_type.setImageResource(R.drawable.ic_customer);
         } else if (Integer.parseInt(user_type_id) == User_type.TEACHER.getValue()) {
             navigationView.inflateMenu(R.menu.teacher_menu);
+            menu_type.setImageResource(R.drawable.ic_coaching);
         } else if (Integer.parseInt(user_type_id) == User_type.ADMIN.getValue()) {
             navigationView.inflateMenu(R.menu.admin_menu);
+            menu_type.setImageResource(R.drawable.ic_admin);
         } else {
             navigationView.inflateMenu(R.menu.guest_menu);
+            menu_type.setImageResource(R.drawable.ic_guest);
         }
         navigationView.setNavigationItemSelectedListener(navigationItemSelectedListener);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -72,7 +85,7 @@ public class RootActivity extends AppCompatActivity {
         }
         else
         {
-            Boolean log_out = extras.getBoolean("log_out");
+            Boolean log_out = extras.getBoolean(getResources().getString(R.string.logged_out));
             if (log_out) {
                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.logout_done), Snackbar.LENGTH_LONG);
                 snackbar.show();
@@ -171,6 +184,26 @@ public class RootActivity extends AppCompatActivity {
                         .add(R.id.nav_host_fragment, DashboardFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(DashboardFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.profile_menu){
+                //Cambio fragment per il profilo
+                PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
+                Fragment profileFragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(getResources().getString(R.string.user_id), Integer.parseInt(preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_id))));
+                profileFragment.setArguments(bundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .replace(R.id.nav_host_fragment, profileFragment, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(ProfileFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.login){

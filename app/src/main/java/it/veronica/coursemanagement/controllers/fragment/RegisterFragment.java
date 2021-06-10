@@ -51,7 +51,7 @@ public class RegisterFragment extends Fragment{
             fragmentManager.beginTransaction()
                     .replace(R.id.nav_host_fragment, LoginFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
+                    .addToBackStack(LoginFragment.class.getName()) // name can be null
                     .commit();
         }
     };
@@ -98,8 +98,8 @@ public class RegisterFragment extends Fragment{
                     }
                     else {
                         PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
-                        preferencesManager.PutPreferenceByKey("User_id", String.valueOf(user_id));
-                        preferencesManager.PutPreferenceByKey("User_type_id", String.valueOf(user.getUser_type_id()));
+                        preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_id), String.valueOf(user_id));
+                        preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_type_id), String.valueOf(user.getUser_type_id()));
                         /*Intent intent = new Intent(RegisterActivity.this, MenuActivity.class);
                         startActivity(intent);*/
                     }

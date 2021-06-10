@@ -79,7 +79,7 @@
                 style="@style/genericButton"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/loginViewsMargin"
-                android:text="@string/chage_pw_btn"
+                android:text="@string/change_pw_btn"
                 android:visibility="gone"
                 app:backgroundTint="@color/colorAccent" />
         

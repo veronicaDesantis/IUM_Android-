@@ -5,6 +5,9 @@
 	<string name="teacher_id">teacher_id</string>
 	<string name="course_id">course_id</string>
 	<string name="user_id">user_id</string>
+	<string name="user_type_id">user_type_id</string>
 	<string name="deleted">deleted</string>
+	<string name="pw_changed">pw_changed</string>
+	<string name="logged_out">logged_out</string>
 	<!-- #endregion -->
 </resources>

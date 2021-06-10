@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_alignParentTop="true"
+	android:background="?android:attr/colorBackground"
+	android:orientation="vertical">
+	
+	
+	<androidx.cardview.widget.CardView
+		android:id="@+id/cardView"
+		style="@style/loginCard"
+		android:layout_gravity="center"
+		android:layout_marginBottom="100dp"
+		android:background="@color/whiteCardColor"
+		android:elevation="5dp"
+		app:cardCornerRadius="@dimen/loginCardRadius"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.51"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/linearParent"
+			android:layout_gravity="center"
+			android:padding="@dimen/loginViewsMargin">
+			
+			<TextView
+				android:id="@+id/title"
+				style="@style/headerTextPrimary"
+				android:layout_marginTop="@dimen/loginViewsMargin"
+				android:text="@string/user_new" />
+			
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/idTextInput"
+				style="@style/parent"
+				android:layout_marginTop="@dimen/signup_text_margin_top"
+				android:visibility="gone">
+				
+				<com.google.android.material.textfield.TextInputEditText
+					style="@style/modifiedEditText"
+					android:inputType="text"
+					android:maxLines="1" />
+			</com.google.android.material.textfield.TextInputLayout>
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="horizontal">
+				
+				<com.google.android.material.chip.Chip
+					android:id="@+id/chip"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
+					android:layout_weight="8"
+					android:textColor="@color/black"
+					app:chipIcon="@drawable/ic_admin"
+					app:chipIconTint="#000000" />
+				
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/nameTextInput"
+					style="@style/parent"
+					android:layout_marginTop="@dimen/signup_text_margin_top"
+					android:layout_weight="1">
+					
+					<com.google.android.material.textfield.TextInputEditText
+						style="@style/modifiedEditText"
+						android:hint="@string/name_hint"
+						android:inputType="text"
+						android:maxLines="1" />
+				</com.google.android.material.textfield.TextInputLayout>
+			</LinearLayout>
+			
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/surnameTextInput"
+				style="@style/parent"
+				android:layout_marginTop="@dimen/signup_text_margin_top">
+				
+				<com.google.android.material.textfield.TextInputEditText
+					style="@style/modifiedEditText"
+					android:hint="@string/surname_hint"
+					android:inputType="text"
+					android:maxLines="1" />
+			</com.google.android.material.textfield.TextInputLayout>
+			
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/mailTextInput"
+				style="@style/parent"
+				android:layout_marginTop="@dimen/signup_text_margin_top">
+				
+				<com.google.android.material.textfield.TextInputEditText
+					style="@style/modifiedEditText"
+					android:hint="@string/email_hint"
+					android:inputType="textEmailAddress"
+					android:maxLines="1" />
+			</com.google.android.material.textfield.TextInputLayout>
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="horizontal">
+				
+				<Button
+					android:id="@+id/editButton"
+					style="@style/genericButton"
+					android:layout_marginTop="@dimen/loginViewsMargin"
+					android:layout_weight="1"
+					android:text="@string/edit_btn"
+					android:visibility="gone" />
+				
+				<Button
+					android:id="@+id/saveButton"
+					style="@style/genericButton"
+					android:layout_marginTop="@dimen/loginViewsMargin"
+					android:layout_weight="1"
+					android:text="@string/save_btn" />
+				
+				<Button
+					android:id="@+id/changePasswordButton"
+					style="@style/genericButton"
+					android:layout_marginTop="@dimen/loginViewsMargin"
+					android:layout_weight="0"
+					android:text="@string/change_pw_btn" />
+			
+			</LinearLayout>
+		
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+	
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/backButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="32dp"
+		android:layout_marginRight="32dp"
+		android:layout_marginBottom="32dp"
+		android:clickable="true"
+		app:backgroundTint="@color/colorPrimaryDark"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:src="@drawable/ic_back"
+		app:tint="@color/white"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

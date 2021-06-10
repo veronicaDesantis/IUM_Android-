@@ -31,7 +31,7 @@ public class LogoutFragment extends Fragment {
         PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext).ClearPreference();
         Intent intent = new Intent(getActivity(), RootActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("log_out", true);
+        intent.putExtra(getResources().getString(R.string.logged_out), true);
         startActivity(intent);
         getActivity().finish();
         return null;

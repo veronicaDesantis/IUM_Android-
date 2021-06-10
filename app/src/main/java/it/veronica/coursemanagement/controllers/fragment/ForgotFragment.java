@@ -84,7 +84,7 @@ public class ForgotFragment extends Fragment {
             TextInputLayout textInputConfirmPassword = root.findViewById(R.id.textInputConfirmPassword);
             String password = textInputPassword.getEditText().getText().toString();
             String confirmPassword = textInputConfirmPassword.getEditText().getText().toString();
-            if (Utility.IsPasswordValid(password)) {
+            if (!Utility.IsPasswordValid(password)) {
                 textInputPassword.setError(getResources().getString(R.string.password_validity_error));
             }
             else if (!password.equals(confirmPassword)) {
@@ -98,13 +98,13 @@ public class ForgotFragment extends Fragment {
                 db.UpdatePassword(user_id, encryptedPassword);
                 PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
                 User user = db.GetUserById(user_id);
-                preferencesManager.PutPreferenceByKey("User_id", String.valueOf(user_id));
-                preferencesManager.PutPreferenceByKey("User_type_id", String.valueOf(user.getUser_type_id()));
+                preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_id), String.valueOf(user_id));
+                preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_type_id), String.valueOf(user.getUser_type_id()));
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.nav_host_fragment, DashboardFragment.class, null)
                         .setReorderingAllowed(true)
-                        .addToBackStack("name") // name can be null
+                        .addToBackStack(DashboardFragment.class.getName()) // name can be null
                         .commit();
             }
         }

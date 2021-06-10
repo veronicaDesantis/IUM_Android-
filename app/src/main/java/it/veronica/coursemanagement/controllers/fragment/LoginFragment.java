@@ -70,8 +70,8 @@ public class LoginFragment extends Fragment {
                 if (dbUser != null)
                 {
                     PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
-                    preferencesManager.PutPreferenceByKey("User_id", String.valueOf(dbUser.getId()));
-                    preferencesManager.PutPreferenceByKey("User_type_id", String.valueOf(dbUser.getUser_type_id()));
+                    preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_id), String.valueOf(dbUser.getId()));
+                    preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_type_id), String.valueOf(dbUser.getUser_type_id()));
                     Intent intent = new Intent(getActivity(), RootActivity.class);
                     startActivity(intent);
                 }
@@ -91,7 +91,7 @@ public class LoginFragment extends Fragment {
             fragmentManager.beginTransaction()
                     .replace(R.id.nav_host_fragment, RegisterFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
+                    .addToBackStack(RegisterFragment.class.getName()) // name can be null
                     .commit();
         }
     };
@@ -104,7 +104,7 @@ public class LoginFragment extends Fragment {
             fragmentManager.beginTransaction()
                     .replace(R.id.nav_host_fragment, ForgotFragment.class, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack("name") // name can be null
+                    .addToBackStack(ForgotFragment.class.getName()) // name can be null
                     .commit();
         }
     };

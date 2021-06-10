@@ -39,6 +39,17 @@ public class dbManager {
         return (int)id;
     }
 
+    public void UpdateUser(int user_id, String name, String surname, String email, int user_type_id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("surname", surname);
+        contentValues.put("email", email);
+        contentValues.put("user_type_id", user_type_id);
+        db.update(User.class.getSimpleName(), contentValues, "id="+String.valueOf(user_id), null);
+    }
+
     public void UpdateUser(int user_id, String name, String surname, String email)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
