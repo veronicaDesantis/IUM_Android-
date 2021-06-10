@@ -19,7 +19,6 @@ public class Catalogue extends Fragment {
 
     private dbManager  db = null;
     private Context myContext = null;
-    private PopupMenu popupMenu;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

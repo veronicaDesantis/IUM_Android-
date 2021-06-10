@@ -24,7 +24,9 @@ import it.veronica.coursemanagement.adapters.CourseAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Teacher;
+import it.veronica.coursemanagement.model.User_type;
 import it.veronica.coursemanagement.model.dbManager;
+import it.veronica.coursemanagement.utility.PreferencesManager;
 
 public class CourseFragment extends Fragment {
 
@@ -39,7 +41,18 @@ public class CourseFragment extends Fragment {
         db = new dbManager(myContext);
         ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.course_page);
 
-        Course[] courses = db.GetAllCourse();
+        Course[] courses;
+        PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
+        int user_id = Integer.parseInt(preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_id)));
+        int user_type_id = Integer.parseInt(preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_type_id)));
+        if (user_type_id == User_type.TEACHER.getValue()) {
+            Teacher teacher = db.GetTeacherByUserId(user_id);
+            courses = db.GetAllCourse(teacher.getId());
+        }
+        else
+        {
+            courses = db.GetAllCourse(null);
+        }
         ArrayList<Course> list1 = new ArrayList<Course>();
         Collections.addAll(list1, courses);
         CourseAdapter adapter = new CourseAdapter(getActivity(), list1);

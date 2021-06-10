@@ -75,24 +75,6 @@ public class TeacherCourseFragment extends Fragment {
         return root;
     }
 
-    /*public AdapterView.OnItemClickListener adapter_click_listener = new AdapterView.OnItemClickListener(){
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Course course = (Course) adapterView.getItemAtPosition(i);
-            //Ricarico il fragment con il nuovo id, per visualizzare i dettagli del docente creato
-            Fragment courseRegistryFragment = new CourseRegistryFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt(getResources().getString(R.string.course_id), course.getId());
-            courseRegistryFragment.setArguments(bundle);
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, courseRegistryFragment, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack(CourseRegistryFragment.class.getName()) // name can be null
-                    .commit();
-        }
-    };*/
-
     public View.OnTouchListener add_listener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {

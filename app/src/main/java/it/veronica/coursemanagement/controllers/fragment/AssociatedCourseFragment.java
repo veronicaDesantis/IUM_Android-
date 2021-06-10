@@ -51,7 +51,7 @@ public class AssociatedCourseFragment extends Fragment {
         int user_id = Integer.parseInt(preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_id)));
         Teacher teacher = db.GetTeacherByUserId(user_id);
         teacher_id = teacher.getId();
-        totalCourse = db.GetCourseNotByTeacherId(teacher_id);
+        totalCourse = db.GetAllCourse(teacher_id);
         ArrayList<Course> list1 = new ArrayList<Course>();
         Collections.addAll(list1, totalCourse);
         TeacherCourseAdapter adapter = new TeacherCourseAdapter(getActivity(), list1);

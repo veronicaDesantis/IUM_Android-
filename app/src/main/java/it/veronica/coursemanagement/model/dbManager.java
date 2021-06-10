@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 
 public class dbManager {
@@ -193,24 +195,45 @@ public class dbManager {
 
     public int CountCourse()
     {
-        return GetAllCourse().length;
+        return GetAllCourse(null).length;
     }
 
-    public Course[] GetAllCourse()
+    public Course[] GetAllCourse(@Nullable Integer teacher_id)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cur = db.query(Course.class.getSimpleName(), new String[]{"id", "code", "title", "description", "cfu"}, null, null, null, null, "");
-        ArrayList<Course> listItems = new ArrayList<Course>();
-        if (cur != null && cur.moveToFirst())
+        if (teacher_id == null)
         {
-            do {
-                listItems.add(readCourse(cur));
-            }while (cur.moveToNext());
-        }
+            Cursor cur = db.query(Course.class.getSimpleName(), new String[]{"id", "code", "title", "description", "cfu"}, null, null, null, null, "");
+            ArrayList<Course> listItems = new ArrayList<Course>();
+            if (cur != null && cur.moveToFirst())
+            {
+                do {
+                    listItems.add(readCourse(cur));
+                }while (cur.moveToNext());
+            }
 
-        Course[] arrItems = new Course[cur.getCount()];
-        arrItems = listItems.toArray(arrItems);
-        return arrItems;
+            Course[] arrItems = new Course[cur.getCount()];
+            arrItems = listItems.toArray(arrItems);
+            return arrItems;
+        }
+        else
+        {
+            String query = "SELECT course.id, code, title, description, cfu, " +
+                    " CASE WHEN (SELECT COUNT(*) FROM course as c INNER JOIN teacher_course ON c.id = teacher_course.course_id WHERE teacher_id LIKE ? AND c.id == course.id) == 1 THEN 1 ELSE 2 END as associated" +
+                    " FROM course";
+            Cursor cur = db.rawQuery(query, new String[] { String.valueOf(teacher_id)});
+            ArrayList<Course> listItems = new ArrayList<Course>();
+            if (cur != null && cur.moveToFirst())
+            {
+                do {
+                    listItems.add(readAssociatedCourse(cur));
+                }while (cur.moveToNext());
+            }
+
+            Course[] arrItems = new Course[cur.getCount()];
+            arrItems = listItems.toArray(arrItems);
+            return arrItems;
+        }
     }
 
     public Course GetCourseById(int course_id)
@@ -237,26 +260,6 @@ public class dbManager {
         {
             do {
                 listItems.add(readCourse(cur));
-            }while (cur.moveToNext());
-        }
-
-        Course[] arrItems = new Course[cur.getCount()];
-        arrItems = listItems.toArray(arrItems);
-        return arrItems;
-    }
-
-    public Course[] GetCourseNotByTeacherId(int teacher_id)
-    {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "SELECT course.id, code, title, description, cfu, " +
-                " CASE WHEN (SELECT COUNT(*) FROM course as c INNER JOIN teacher_course ON c.id = teacher_course.course_id WHERE teacher_id LIKE ? AND c.id == course.id) == 1 THEN 1 ELSE 2 END as associated" +
-                " FROM course";
-        Cursor cur = db.rawQuery(query, new String[] { String.valueOf(teacher_id)});
-        ArrayList<Course> listItems = new ArrayList<Course>();
-        if (cur != null && cur.moveToFirst())
-        {
-            do {
-                listItems.add(readAssociatedCourse(cur));
             }while (cur.moveToNext());
         }
 

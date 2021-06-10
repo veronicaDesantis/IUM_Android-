@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.coursemanagement.R;
@@ -31,13 +32,22 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         }
 
         // Lookup view for data population
-        TextView name = (TextView)convertView.findViewById(R.id.name);
-        Chip chip = (Chip)convertView.findViewById(R.id.chip);
-        TextView description = (TextView)convertView.findViewById(R.id.description);
+        TextView name = convertView.findViewById(R.id.name);
+        Chip chip = convertView.findViewById(R.id.chip);
+        TextView description = convertView.findViewById(R.id.description);
+        ImageView mine_course = convertView.findViewById(R.id.mine_course);
         // Populate the data into the template view using the data object
         name.setText(course.getTitle());
         chip.setText(String.valueOf(course.getCfu()));
         description.setText(course.getDescription());
+        if (course.getAssociated() == 1)
+        {
+            mine_course.setImageResource(R.drawable.ic_heart);
+        }
+        else
+        {
+            mine_course.setImageResource(R.drawable.ic_heart_empty);
+        }
         // Return the completed view to render on screen
         return convertView;
 
