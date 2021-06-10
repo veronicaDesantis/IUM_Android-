@@ -11,7 +11,7 @@
 		android:layout_marginStart="15dp"
 		android:layout_marginLeft="15dp"
 		android:src="@drawable/ic_heart_empty"
-		app:tint="@color/black" />
+		app:tint="@color/colorAccent" />
 	
 	<LinearLayout
 		style="@style/linearParent"

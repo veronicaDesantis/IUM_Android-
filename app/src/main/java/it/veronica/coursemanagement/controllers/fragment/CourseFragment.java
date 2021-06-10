@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import it.veronica.coursemanagement.adapters.CourseAdapter;
+import it.veronica.coursemanagement.adapters.CourseForTeacherAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Teacher;
@@ -55,9 +56,16 @@ public class CourseFragment extends Fragment {
         }
         ArrayList<Course> list1 = new ArrayList<Course>();
         Collections.addAll(list1, courses);
-        CourseAdapter adapter = new CourseAdapter(getActivity(), list1);
         ListView listView = root.findViewById(R.id.course_list_view);
-        listView.setAdapter(adapter);
+        if (user_type_id == User_type.TEACHER.getValue()) {
+            CourseForTeacherAdapter adapter = new CourseForTeacherAdapter(getActivity(), list1);
+            listView.setAdapter(adapter);
+        }
+        else
+        {
+            CourseAdapter adapter = new CourseAdapter(getActivity(), list1);
+            listView.setAdapter(adapter);
+        }
         listView.setOnItemClickListener(adapter_click_listener);
         if (courses.length == 0)
         {

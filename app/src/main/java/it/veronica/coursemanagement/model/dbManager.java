@@ -219,7 +219,7 @@ public class dbManager {
         else
         {
             String query = "SELECT course.id, code, title, description, cfu, " +
-                    " CASE WHEN (SELECT COUNT(*) FROM course as c INNER JOIN teacher_course ON c.id = teacher_course.course_id WHERE teacher_id LIKE ? AND c.id == course.id) == 1 THEN 1 ELSE 2 END as associated" +
+                    " CASE WHEN (SELECT COUNT(*) FROM course as c INNER JOIN teacher_course ON c.id = teacher_course.course_id WHERE teacher_id LIKE ? AND c.id == course.id) == 1 THEN 1 ELSE 0 END as associated" +
                     " FROM course";
             Cursor cur = db.rawQuery(query, new String[] { String.valueOf(teacher_id)});
             ArrayList<Course> listItems = new ArrayList<Course>();

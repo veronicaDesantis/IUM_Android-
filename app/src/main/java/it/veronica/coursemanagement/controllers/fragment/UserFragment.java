@@ -20,10 +20,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import it.veronica.coursemanagement.adapters.CourseAdapter;
 import it.veronica.coursemanagement.adapters.UserAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
-import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.dbManager;
 

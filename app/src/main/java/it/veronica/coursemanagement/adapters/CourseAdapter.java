@@ -35,21 +35,12 @@ public class CourseAdapter extends ArrayAdapter<Course> {
         TextView name = convertView.findViewById(R.id.name);
         Chip chip = convertView.findViewById(R.id.chip);
         TextView description = convertView.findViewById(R.id.description);
-        ImageView mine_course = convertView.findViewById(R.id.mine_course);
-        // Populate the data into the template view using the data object
         name.setText(course.getTitle());
         chip.setText(String.valueOf(course.getCfu()));
         description.setText(course.getDescription());
-        if (course.getAssociated() == 1)
-        {
-            mine_course.setImageResource(R.drawable.ic_heart);
-        }
-        else
-        {
-            mine_course.setImageResource(R.drawable.ic_heart_empty);
-        }
+        ImageView mine_course = convertView.findViewById(R.id.mine_course);
+        mine_course.setVisibility(View.GONE);
         // Return the completed view to render on screen
         return convertView;
-
     }
 }
