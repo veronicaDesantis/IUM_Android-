@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import com.example.coursemanagement.R;
 
+import it.veronica.coursemanagement.controllers.fragment.ApplicationSettingFragment;
 import it.veronica.coursemanagement.controllers.fragment.Catalogue;
 import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
 import it.veronica.coursemanagement.controllers.fragment.DashboardFragment;
@@ -200,6 +201,21 @@ public class RootActivity extends AppCompatActivity {
                         .replace(R.id.nav_host_fragment, profileFragment, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(ProfileFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.setting) {
+                //Cambio fragment per il login
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, ApplicationSettingFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(ApplicationSettingFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.login) {

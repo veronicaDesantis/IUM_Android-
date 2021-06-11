@@ -9,6 +9,12 @@
 	<string name="deleted">deleted</string>
 	<string name="pw_changed">pw_changed</string>
 	<string name="logged_out">logged_out</string>
-	<string name="associated">associated</string>
+	<string name="preferencesManager">session</string>
+	<string name="start_time_reservation">start_time</string>
+	<string name="start_time_default_value">14:00</string>
+	<string name="end_time_reservation">end_time</string>
+	<string name="end_time_default_value">18:00</string>
+	<string name="days_reservation">days</string>
+	<string name="days_default_value"></string>
 	<!-- #endregion -->
 </resources>

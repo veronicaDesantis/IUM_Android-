@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_alignParentTop="true"
+	android:background="?android:attr/colorBackground"
+	android:orientation="vertical">
+	
+	
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+		<androidx.cardview.widget.CardView
+			android:id="@+id/cardView"
+			style="@style/loginCard"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:background="@color/whiteCardColor"
+			android:elevation="5dp"
+			app:cardCornerRadius="@dimen/loginCardRadius"
+			tools:targetApi="lollipop">
+			
+			<LinearLayout
+				style="@style/linearParent"
+				android:layout_gravity="center"
+				android:padding="@dimen/loginViewsMargin">
+
+					
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="5"
+						android:text="@string/start_time_hint" />
+				
+				<TimePicker
+					android:id="@+id/startTimePicker"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:timePickerMode="spinner" />
+					
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_weight="5"
+						android:text="@string/end_time_hint" />
+				
+				<TimePicker
+					android:id="@+id/endTimePicker"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:timePickerMode="spinner" />
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_weight="5"
+					android:orientation="horizontal">
+					
+					<CheckBox
+						android:id="@+id/checkBox_lunedi"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/l_days" />
+					<CheckBox
+						android:id="@+id/checkBox_martedi"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/m_days" />
+					<CheckBox
+						android:id="@+id/checkBox_mercoledi"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/m_days" />
+					<CheckBox
+						android:id="@+id/checkBox_giovedi"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/g_days" />
+					<CheckBox
+						android:id="@+id/checkBox_venerdi"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/v_days" />
+					<CheckBox
+						android:id="@+id/checkBox_sabato"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/s_days" />
+					<CheckBox
+						android:id="@+id/checkBox_domenica"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="@string/d_days" />
+				
+				</LinearLayout>
+				
+				<Button
+					android:id="@+id/saveButton"
+					style="@style/genericButton"
+					android:layout_width="match_parent"
+					android:layout_marginTop="@dimen/loginViewsMargin"
+					android:text="@string/save_btn" />
+			
+			</LinearLayout>
+		</androidx.cardview.widget.CardView>
+	</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
