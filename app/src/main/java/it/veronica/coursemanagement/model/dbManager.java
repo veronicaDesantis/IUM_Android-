@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class dbManager {
     private dbHelper dbHelper;
@@ -249,25 +251,6 @@ public class dbManager {
         }
     }
 
-    public Course[] GetCourseByTeacherId(int teacher_id)
-    {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cur = db.query(Course.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(), new String[]{"course.id", "code", "title", "description", "cfu"},
-                "course.id == teacher_course.course_id AND teacher_course.teacher_id like ?",
-                new String[]{ String.valueOf(teacher_id) }, null, null, "");
-        ArrayList<Course> listItems = new ArrayList<Course>();
-        if (cur != null && cur.moveToFirst())
-        {
-            do {
-                listItems.add(readCourse(cur));
-            }while (cur.moveToNext());
-        }
-
-        Course[] arrItems = new Course[cur.getCount()];
-        arrItems = listItems.toArray(arrItems);
-        return arrItems;
-    }
-
     public Course readAssociatedCourse(Cursor cur){
         Course course = readCourse(cur);
         course.setAssociated(cur.getInt(cur.getColumnIndex("associated")));
@@ -314,7 +297,7 @@ public class dbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("surname", surname);
-        db.update(Teacher.class.getSimpleName(), contentValues, "id="+String.valueOf(id), null);
+        db.update(Teacher.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(id) });
     }
 
     public void DeleteTeacher(int id)
@@ -384,27 +367,23 @@ public class dbManager {
 
     //#region TEACHER_COURSE
 
-    public Teacher_course[] GetTeacherCourseByTeacherIdCourseId(int teacher_id, int course_id)
+    public Teacher_course GetTeacherCourseByTeacherIdCourseId(int teacher_id, int course_id)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cur = db.query(Teacher_course.class.getSimpleName(), new String[]{"id"},"teacher_id LIKE ? AND course_id LIKE ?", new String[]{ String.valueOf(teacher_id), String.valueOf(course_id) }, null, null, "");
-        ArrayList<Teacher_course> listItems = new ArrayList<Teacher_course>();
-        if (cur != null && cur.moveToFirst())
-        {
-            do {
-                listItems.add(readTeacherCourse(cur));
-            }while (cur.moveToNext());
+        if (cur != null && cur.moveToFirst()) {
+            return readTeacherCourse(cur);
         }
-
-        Teacher_course[] arrItems = new Teacher_course[cur.getCount()];
-        arrItems = listItems.toArray(arrItems);
-        return arrItems;
+        else
+        {
+            return null;
+        }
     }
 
     public void InsertTeacherCourse(int teacher_id, int course_id)
     {
-        Teacher_course[] teacher_courses = GetTeacherCourseByTeacherIdCourseId(teacher_id, course_id);
-        if (teacher_courses.length == 0) {
+        Teacher_course teacher_courses = GetTeacherCourseByTeacherIdCourseId(teacher_id, course_id);
+        if (teacher_courses == null) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("teacher_id", teacher_id);
@@ -420,7 +399,146 @@ public class dbManager {
     }
     public Teacher_course readTeacherCourse(Cursor cur){
         Teacher_course teacher_course = new Teacher_course();
+        teacher_course.setId(cur.getInt(cur.getColumnIndex("id")));
         return teacher_course;
+    }
+
+    //#endregion
+
+    //#region DISPONIBILITY
+
+    public void InsertDisponibility(int teacher_course_id, String datetime, String start_time, String end_time)
+    {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("teacher_course_id", teacher_course_id);
+            contentValues.put("datetime", datetime);
+            contentValues.put("start_time", start_time);
+            contentValues.put("end_time", end_time);
+            contentValues.put("available", 1);
+            db.insert(Disponibility.class.getSimpleName(), null, contentValues);
+    }
+
+    public void UpdateDisponibility(int id, int teacher_course_id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("teacher_course_id", teacher_course_id);
+        db.update(Disponibility.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(id) });
+    }
+
+    public void DeleteDisponibility(int id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(Disponibility.class.getSimpleName(), "id LIKE ?", new String[]{ String.valueOf(id) });
+    }
+
+    public Disponibility GetDisponibilityByTeacherDateSlot(int teacher_id, String date, String start_time)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Disponibility.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                new String[]{"disponibility.id, teacher_course_id, datetime, start_time, end_time, available, teacher_course.teacher_id, teacher_course.course_id"},
+                "disponibility.teacher_course_id = teacher_course.id AND teacher_course.teacher_id LIKE ? AND datetime LIKE ? AND start_time LIKE ?",
+                new String[]{ String.valueOf(teacher_id), String.valueOf(date), String.valueOf(start_time) }, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readDisponibility(cur);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public Disponibility GetDisponibilityById(int disponibility_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Disponibility.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                new String[]{"disponibility.id, teacher_course_id, datetime, start_time, end_time, available, teacher_course.teacher_id, teacher_course.course_id"},
+                "disponibility.teacher_course_id = teacher_course.id AND disponibility.id LIKE ?",
+                new String[]{ String.valueOf(disponibility_id)}, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readDisponibility(cur);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public Disponibility readDisponibility(Cursor cur){
+        Disponibility disponibility = new Disponibility();
+        disponibility.setId(cur.getInt(cur.getColumnIndex("id")));
+        disponibility.setTeacher_Course_id(cur.getInt(cur.getColumnIndex("teacher_course_id")));
+        disponibility.setDatetime(cur.getString(cur.getColumnIndex("datetime")));
+        disponibility.setStartTime(cur.getString(cur.getColumnIndex("start_time")));
+        disponibility.setEndTime(cur.getString(cur.getColumnIndex("end_time")));
+        disponibility.setAvailability(cur.getInt(cur.getColumnIndex("available")));
+        disponibility.setTeacher(GetTeacherById(cur.getInt(cur.getColumnIndex("teacher_id"))));
+        disponibility.setCourse(GetCourseById(cur.getInt(cur.getColumnIndex("course_id"))));
+        return disponibility;
+    }
+
+    //#endregion
+
+    //#region APPLICATION SETTING
+
+    public int InsertSettings(Application_Setting setting)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("start_time", setting.getStarTime());
+        contentValues.put("end_time", setting.getEndTime());
+        contentValues.put("days", setting.getDays());
+        long id = 0;
+        try
+        {
+            id = db.insert(Application_Setting.class.getSimpleName(), null, contentValues);
+        }
+        catch (SQLException sqle)
+        {
+            System.out.println(sqle.getMessage());
+            return -1;
+        }
+        return (int)id;
+    }
+
+    public void UpdateDays(String days)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("days", days);
+        db.update(Application_Setting.class.getSimpleName(), contentValues, null, null);
+    }
+
+    public void UpdateSlot(String start_time, String end_time)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("start_time", start_time);
+        contentValues.put("end_time", end_time);
+        db.update(Application_Setting.class.getSimpleName(), contentValues, null, null);
+    }
+
+    public Application_Setting GetApplicationSetting()
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Application_Setting.class.getSimpleName(), new String[]{"id", "days", "start_time", "end_time"}, null, null, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readApplicationSetting(cur);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public Application_Setting readApplicationSetting(Cursor cur){
+        Application_Setting applicationSetting = new Application_Setting();
+        applicationSetting.setId(cur.getInt(cur.getColumnIndex("id")));
+        applicationSetting.setDays(cur.getString(cur.getColumnIndex("days")));
+        applicationSetting.setStarTime(cur.getString(cur.getColumnIndex("start_time")));
+        applicationSetting.setEndTime(cur.getString(cur.getColumnIndex("end_time")));
+        return applicationSetting;
     }
 
     //#endregion

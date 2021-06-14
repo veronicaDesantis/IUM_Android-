@@ -26,6 +26,7 @@ public class DashboardFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         myContext = this.getContext();
         db = new dbManager(myContext);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.dashboard_page);
         int countCourse = db.CountCourse();
         int countTeacher = db.CountTeacher();
         Chip courseChip = root.findViewById(R.id.course_kpi);

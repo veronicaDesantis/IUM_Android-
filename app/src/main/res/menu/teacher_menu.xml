@@ -13,6 +13,10 @@
 			android:icon="@drawable/ic_course"
 			android:title="@string/course_menu" />
 		<item
+			android:id="@+id/disponibility"
+			android:icon="@drawable/ic_calendar"
+			android:title="@string/disponibility_menu" />
+		<item
 			android:id="@+id/catalogue"
 			android:icon="@drawable/ic_catalogue"
 			android:title="@string/catalogue_menu" />

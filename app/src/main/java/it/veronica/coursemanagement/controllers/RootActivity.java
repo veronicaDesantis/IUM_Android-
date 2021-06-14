@@ -10,6 +10,7 @@ import it.veronica.coursemanagement.controllers.fragment.ApplicationSettingFragm
 import it.veronica.coursemanagement.controllers.fragment.Catalogue;
 import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
 import it.veronica.coursemanagement.controllers.fragment.DashboardFragment;
+import it.veronica.coursemanagement.controllers.fragment.DisponibilityFragment;
 import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
 import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
 import it.veronica.coursemanagement.controllers.fragment.ProfileFragment;
@@ -136,6 +137,21 @@ public class RootActivity extends AppCompatActivity {
                         .add(R.id.nav_host_fragment, TeacherFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(TeacherFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.disponibility) {
+                //Cambio fragment per la lista docenti
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .add(R.id.nav_host_fragment, DisponibilityFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(DisponibilityFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.course) {

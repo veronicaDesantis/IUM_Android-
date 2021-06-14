@@ -54,6 +54,7 @@
 	<string name="dashboard_menu">Dashboard</string>
 	<string name="course_menu">Corsi</string>
 	<string name="teacher_menu">Docenti</string>
+	<string name="disponibility_menu">Disponibilità</string>
 	<string name="user_menu">Utenti registrati</string>
 	<string name="calendar_menu">Calendario</string>
 	<string name="profile_menu">Profilo personale</string>
@@ -70,6 +71,7 @@
 	<string name="forgot_page">Recupera password</string>
 	<string name="dashboard_page">Dashboard</string>
 	<string name="teacher_page">Docenti</string>
+	<string name="disponibility_page">Disponibilità</string>
 	<string name="course_page">Corsi</string>
 	<string name="user_page">Utenti</string>
 	<string name="profile_page">Profilo personale</string>
@@ -78,7 +80,7 @@
 	<!-- endregion -->
 	
 	<string name="no_result">Nessun risultato</string>
-	<string name="nothing_associated">Nessuna associazione</string>
+	<string name="no_disponibility">Nessuna disponibilità</string>
 	
 	<!-- region TEACHER -->
 	<string name="teacher_new">Creazione docente</string>
@@ -87,6 +89,14 @@
 	<string name="teacher_name">Nome</string>
 	<string name="teacher_surname">Cognome</string>
 	<string name="teacher_email">Email</string>
+	<!-- endregion -->
+	
+	<!-- region DISPONIBILITY -->
+	<string name="disponibility_detail">Dettaglio disponibilità</string>
+	<string name="disponibility_edit">Modifica disponibilità</string>
+	<string name="disponibility_date">Data</string>
+	<string name="disponibility_slot">Slot</string>
+	<string name="disponibility_course">Corso</string>
 	<!-- endregion -->
 	
 	<!-- region COURSE -->

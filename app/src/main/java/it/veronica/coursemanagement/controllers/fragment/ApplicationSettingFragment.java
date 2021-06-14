@@ -3,42 +3,34 @@ package it.veronica.coursemanagement.controllers.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 
 import it.veronica.coursemanagement.controllers.RootActivity;
-import it.veronica.coursemanagement.model.User;
-import it.veronica.coursemanagement.model.User_type;
+import it.veronica.coursemanagement.model.Application_Setting;
 import it.veronica.coursemanagement.model.dbManager;
-import it.veronica.coursemanagement.utility.FormEnum;
-import it.veronica.coursemanagement.utility.PreferencesManager;
 
 public class ApplicationSettingFragment extends Fragment {
 
     private View root = null;
     private Context myContext = null;
+    private dbManager db = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_application_setting, container, false);
         ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.application_setting_page);
         myContext = this.getContext();
-        ((RootActivity)getActivity()).getSupportActionBar().show();
+        db = new dbManager(myContext);
 
         Button saveButton = root.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(saveButtonListener);
@@ -48,25 +40,20 @@ public class ApplicationSettingFragment extends Fragment {
         TimePicker endTimePicker = root.findViewById(R.id.endTimePicker);
         endTimePicker.setIs24HourView(true);
 
-        PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
-        String start_time = preferencesManager.GetPreferenceByKey(getResources().getString(R.string.start_time_reservation));
-        String end_time = preferencesManager.GetPreferenceByKey(getResources().getString(R.string.end_time_reservation));
+        Application_Setting applicationSetting = db.GetApplicationSetting();
 
-        if (start_time == null)
+        if (applicationSetting == null)
         {
-            start_time = getString(R.string.start_time_default_value);
-            preferencesManager.PutPreferenceByKey(getResources().getString(R.string.start_time_reservation), start_time);
-        }
-        if (end_time == null)
-        {
-            end_time = getString(R.string.end_time_default_value);
-            preferencesManager.PutPreferenceByKey(getResources().getString(R.string.end_time_reservation), end_time);
+            applicationSetting.setDays(getResources().getString(R.string.days_default_value));
+            applicationSetting.setStarTime(getResources().getString(R.string.start_time_default_value));
+            applicationSetting.setEndTime(getResources().getString(R.string.end_time_default_value));
+            db.InsertSettings(applicationSetting);
         }
 
-        startTimePicker.setHour(Integer.parseInt(start_time.split(":")[0]));
-        startTimePicker.setMinute(Integer.parseInt(start_time.split(":")[1]));
-        endTimePicker.setHour(Integer.parseInt(end_time.split(":")[0]));
-        endTimePicker.setMinute(Integer.parseInt(end_time.split(":")[1]));
+        startTimePicker.setHour(Integer.parseInt(applicationSetting.getStarTime().split(":")[0]));
+        startTimePicker.setMinute(Integer.parseInt(applicationSetting.getStarTime().split(":")[1]));
+        endTimePicker.setHour(Integer.parseInt(applicationSetting.getEndTime().split(":")[0]));
+        endTimePicker.setMinute(Integer.parseInt(applicationSetting.getEndTime().split(":")[1]));
 
         CheckBox checkBox_lunedi = root.findViewById(R.id.checkBox_lunedi);
         CheckBox checkBox_martedi = root.findViewById(R.id.checkBox_martedi);
@@ -82,13 +69,7 @@ public class ApplicationSettingFragment extends Fragment {
         checkBox_venerdi.setChecked(false);
         checkBox_sabato.setChecked(false);
         checkBox_domenica.setChecked(false);
-        String day = preferencesManager.GetPreferenceByKey(getResources().getString(R.string.days_reservation));
-        if (day == null)
-        {
-            day = getString(R.string.days_default_value);
-            preferencesManager.PutPreferenceByKey(getResources().getString(R.string.days_reservation), day);
-        }
-        String[] days = day.split(",");
+        String[] days = applicationSetting.getDays().split(",");
         for (String d: days) {
             switch (d) {
                 case "lunedi":
@@ -128,9 +109,7 @@ public class ApplicationSettingFragment extends Fragment {
             TimePicker endTimePicker = root.findViewById(R.id.endTimePicker);
             String startDate = startTimePicker.getHour() + ":" + startTimePicker.getMinute();
             String endDate = endTimePicker.getHour() + ":" + endTimePicker.getMinute();
-            PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
-            preferencesManager.PutPreferenceByKey(getResources().getString(R.string.start_time_reservation), startDate);
-            preferencesManager.PutPreferenceByKey(getResources().getString(R.string.end_time_reservation), endDate);
+            db.UpdateSlot(startDate, endDate);
             CheckBox checkBox_lunedi = root.findViewById(R.id.checkBox_lunedi);
             CheckBox checkBox_martedi = root.findViewById(R.id.checkBox_martedi);
             CheckBox checkBox_mercoledi = root.findViewById(R.id.checkBox_mercoledi);
@@ -146,7 +125,7 @@ public class ApplicationSettingFragment extends Fragment {
             if (checkBox_venerdi.isChecked()) { days += "venerdi,"; }
             if (checkBox_sabato.isChecked()) { days += "sabato,"; }
             if (checkBox_domenica.isChecked()) { days += "domenica,"; }
-            preferencesManager.PutPreferenceByKey(getResources().getString(R.string.days_reservation), days);
+            db.UpdateDays(days);
             Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.edit_done), Snackbar.LENGTH_LONG);
             snackbar.show();
         }

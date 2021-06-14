@@ -63,7 +63,7 @@ public class CourseFragment extends Fragment {
         }
         else
         {
-            CourseAdapter adapter = new CourseAdapter(getActivity(), list1);
+            CourseAdapter adapter = new CourseAdapter(getActivity(), list1, false);
             listView.setAdapter(adapter);
         }
         listView.setOnItemClickListener(adapter_click_listener);
