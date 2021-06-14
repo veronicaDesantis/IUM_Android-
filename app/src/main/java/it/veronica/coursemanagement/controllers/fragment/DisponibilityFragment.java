@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import it.veronica.coursemanagement.adapters.DisponibilityCalendarAdapter;
+import it.veronica.coursemanagement.adapters.DisponibilityListAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Application_Setting;
 import it.veronica.coursemanagement.model.Course;
@@ -165,7 +166,7 @@ public class DisponibilityFragment extends Fragment {
         }
     };
 
-    public AdapterView.OnItemClickListener calendarListListener = new AdapterView.OnItemClickListener(){
+    public AdapterView.OnItemClickListener ListListener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Disponibility disponibility = (Disponibility) adapterView.getItemAtPosition(i);
@@ -199,35 +200,18 @@ public class DisponibilityFragment extends Fragment {
 
         ListView calendarList = root.findViewById(R.id.calendarList);
         //Prendo la lista di disponibilità per il giorno e per il docente
-        String start_time = applicationSetting.getStarTime();
-        String end_time = applicationSetting.getEndTime();
-        int hour_start = Integer.valueOf(start_time.split(":")[0]);
-        String minute_start = start_time.split(":")[1];
-        int hour_end = Integer.valueOf(end_time.split(":")[0]);
-        ArrayList<Disponibility> disponibilityList = new ArrayList<Disponibility>();
-        while(hour_start < hour_end)
-        {
-            Disponibility disponibility = db.GetDisponibilityByTeacherDateSlot(teacher.getId(), dateString, hour_start + ":" + minute_start);
-            /*View inflatedView = View.inflate(myContext, R.layout.list_item_disponibility, null);
-            TextView slot = inflatedView.findViewById(R.id.slot);*/
-            int tempStart = hour_start + 1;
-            String slotText = hour_start + ":" +minute_start + "-" + tempStart + ":" + minute_start;
-            /*slot.setText(slotText);
-            TextView name = inflatedView.findViewById(R.id.name);*/
-            if (disponibility == null)
-            {
-                disponibility = new Disponibility(dateString, hour_start + ":" +minute_start, tempStart + ":" + minute_start);
-            }
-            hour_start = hour_start + 1;
-            //calendarList.addView(inflatedView);
-            disponibilityList.add(disponibility);
-        }
-        DisponibilityCalendarAdapter adapter = new DisponibilityCalendarAdapter(getActivity(), disponibilityList);
+        DisponibilityCalendarAdapter adapter = new DisponibilityCalendarAdapter(getActivity(), GetDisponibility(dateString));
         calendarList.setAdapter(adapter);
-        calendarList.setOnItemClickListener(calendarListListener);
+        calendarList.setOnItemClickListener(ListListener);
     }
 
-    private void RenderListView(){
+    private void RenderListView()
+    {
+        ListView list_view = root.findViewById(R.id.list_view);
+        //Prendo la lista di disponibilità per il giorno e per il docente
+        DisponibilityListAdapter adapter = new DisponibilityListAdapter(getActivity(), GetDisponibility(""));
+        list_view.setAdapter(adapter);
+        list_view.setOnItemClickListener(ListListener);
     }
 
     private boolean IsInWeek()
@@ -258,5 +242,35 @@ public class DisponibilityFragment extends Fragment {
                 break;
         }
         return applicationSetting.getDays().indexOf(dayString) == -1;
+    }
+
+    private ArrayList<Disponibility> GetDisponibility(String datetime)
+    {
+        //Prendo la lista di disponibilità per il giorno e per il docente
+        String start_time = applicationSetting.getStarTime();
+        String end_time = applicationSetting.getEndTime();
+        int hour_start = Integer.valueOf(start_time.split(":")[0]);
+        String minute_start = start_time.split(":")[1];
+        int hour_end = Integer.valueOf(end_time.split(":")[0]);
+        ArrayList<Disponibility> disponibilityList = new ArrayList<Disponibility>();
+        if (datetime != "") {
+            while (hour_start < hour_end) {
+                Disponibility disponibility = db.GetDisponibilityByTeacherDateSlot(teacher.getId(), datetime, hour_start + ":" + minute_start);
+                int tempStart = hour_start + 1;
+                if (disponibility == null) {
+                    disponibility = new Disponibility(datetime, hour_start + ":" + minute_start, tempStart + ":" + minute_start);
+                }
+                hour_start = hour_start + 1;
+                disponibilityList.add(disponibility);
+            }
+        }
+        else
+        {
+            Disponibility[] disponibilities = db.GetDisponibilityByTeacher(teacher.getId());
+            for (Disponibility disponibility: disponibilities) {
+                disponibilityList.add(disponibility);
+            }
+        }
+        return disponibilityList;
     }
 }

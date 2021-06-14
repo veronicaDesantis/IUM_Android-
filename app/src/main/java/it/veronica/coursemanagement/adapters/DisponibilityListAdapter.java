@@ -3,36 +3,28 @@ package it.veronica.coursemanagement.adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.coursemanagement.R;
-import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 
-import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
-import it.veronica.coursemanagement.controllers.fragment.DisponibilityRegistryFragment;
-import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Disponibility;
 
-public class DisponibilityCalendarAdapter extends ArrayAdapter<Disponibility> {
+public class DisponibilityListAdapter extends ArrayAdapter<Disponibility> {
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private Context myContext;
 
-    public DisponibilityCalendarAdapter(Context context, ArrayList<Disponibility> disponibilities) {
+    public DisponibilityListAdapter(Context context, ArrayList<Disponibility> disponibilities) {
         super(context, 0, disponibilities);
         myContext = context;
     }
@@ -45,11 +37,13 @@ public class DisponibilityCalendarAdapter extends ArrayAdapter<Disponibility> {
         Disponibility disponibility = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_disponibility_calendar, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_disponibility, parent, false);
         }
 
         // Lookup view for data population
+        TextView date = convertView.findViewById(R.id.date);
         TextView slot = convertView.findViewById(R.id.slot);
+        date.setText(disponibility.getDatetime());
         slot.setText(disponibility.getStartTime() + "-" + disponibility.getEndTime());
         if (disponibility.getCourse() != null)
         {

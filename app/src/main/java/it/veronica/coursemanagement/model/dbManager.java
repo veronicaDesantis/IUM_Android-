@@ -449,6 +449,26 @@ public class dbManager {
         }
     }
 
+    public Disponibility[] GetDisponibilityByTeacher(int teacher_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Disponibility.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                new String[]{"disponibility.id, teacher_course_id, datetime, start_time, end_time, available, teacher_course.teacher_id, teacher_course.course_id"},
+                "disponibility.teacher_course_id = teacher_course.id AND teacher_course.teacher_id LIKE ?",
+                new String[]{ String.valueOf(teacher_id) }, null, null, "");
+        ArrayList<Disponibility> listItems = new ArrayList<Disponibility>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readDisponibility(cur));
+            }while (cur.moveToNext());
+        }
+
+        Disponibility[] arrItems = new Disponibility[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
     public Disponibility GetDisponibilityById(int disponibility_id)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
