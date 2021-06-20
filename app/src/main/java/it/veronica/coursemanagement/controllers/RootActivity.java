@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import com.example.coursemanagement.R;
 
 import it.veronica.coursemanagement.controllers.fragment.ApplicationSettingFragment;
-import it.veronica.coursemanagement.controllers.fragment.Catalogue;
+import it.veronica.coursemanagement.controllers.fragment.CatalogueFragment;
 import it.veronica.coursemanagement.controllers.fragment.CourseFragment;
 import it.veronica.coursemanagement.controllers.fragment.DashboardFragment;
 import it.veronica.coursemanagement.controllers.fragment.DisponibilityFragment;
@@ -119,9 +119,9 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, Catalogue.class, null)
+                        .replace(R.id.nav_host_fragment, CatalogueFragment.class, null)
                         .setReorderingAllowed(true)
-                        .addToBackStack(Catalogue.class.getName()) // name can be null
+                        .addToBackStack(CatalogueFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.teacher) {
@@ -134,7 +134,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, TeacherFragment.class, null)
+                        .replace(R.id.nav_host_fragment, TeacherFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(TeacherFragment.class.getName()) // name can be null
                         .commit();
@@ -149,7 +149,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, DisponibilityFragment.class, null)
+                        .replace(R.id.nav_host_fragment, DisponibilityFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(DisponibilityFragment.class.getName()) // name can be null
                         .commit();
@@ -164,7 +164,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, CourseFragment.class, null)
+                        .replace(R.id.nav_host_fragment, CourseFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(CourseFragment.class.getName()) // name can be null
                         .commit();
@@ -179,7 +179,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, UserFragment.class, null)
+                        .replace(R.id.nav_host_fragment, UserFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(UserFragment.class.getName()) // name can be null
                         .commit();
@@ -194,7 +194,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, DashboardFragment.class, null)
+                        .replace(R.id.nav_host_fragment, DashboardFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(DashboardFragment.class.getName()) // name can be null
                         .commit();
@@ -229,7 +229,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, ApplicationSettingFragment.class, null)
+                        .replace(R.id.nav_host_fragment, ApplicationSettingFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(ApplicationSettingFragment.class.getName()) // name can be null
                         .commit();
@@ -244,7 +244,7 @@ public class RootActivity extends AppCompatActivity {
                                 R.anim.fade_in,   // popEnter
                                 R.anim.slide_out  // popExit
                         )
-                        .add(R.id.nav_host_fragment, LoginFragment.class, null)
+                        .replace(R.id.nav_host_fragment, LoginFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(LoginFragment.class.getName()) // name can be null
                         .commit();

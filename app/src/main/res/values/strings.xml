@@ -43,6 +43,7 @@
 	<string name="edit_done">Modifica effettuata</string>
 	<string name="delete_done">Oggetto eliminato</string>
 	<string name="password_changed">Password modificata</string>
+	<string name="need_registration">Operazione non consentita. Obbligatoria la registrazione</string>
 	<!-- endregion -->
 	
 	<!-- region DASHBOARD -->
@@ -70,6 +71,7 @@
 	<string name="register_page">Registrati</string>
 	<string name="forgot_page">Recupera password</string>
 	<string name="dashboard_page">Dashboard</string>
+	<string name="catalogue_page">Catalogo</string>
 	<string name="teacher_page">Docenti</string>
 	<string name="disponibility_page">Disponibilità</string>
 	<string name="course_page">Corsi</string>
@@ -107,6 +109,12 @@
 	<string name="course_title">Titolo</string>
 	<string name="course_description">Descrizione</string>
 	<string name="course_cfu">CFU</string>
+	<!-- endregion -->
+	
+	<!-- region RESERVATION -->
+	<string name="reservation_detail">Dettaglio prenotazione</string>
+	<string name="course_title_course">Titolo corso</string>
+	<string name="teacher_name_teacher">Docente</string>
 	<!-- endregion -->
 	
 	<!-- region USER -->

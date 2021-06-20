@@ -5,7 +5,6 @@ import java.sql.Date;
 public class Reservation {
     public int Id;
     public int User_id;
-    public int Status_type_id;
     public int Disponibility_id;
 
     //#region GETTER and SETTER
@@ -24,14 +23,6 @@ public class Reservation {
 
     public void setUser_id(int user_id) {
         User_id = user_id;
-    }
-
-    public int getStatus_type_id() {
-        return Status_type_id;
-    }
-
-    public void setStatus_type_id(int status_type_id) {
-        Status_type_id = status_type_id;
     }
 
     public int getDisponibility_id() {

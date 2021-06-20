@@ -28,14 +28,11 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL(q);
         q = " CREATE TABLE teacher_course (id INTEGER PRIMARY KEY, teacher_id INTEGER, course_id , FOREIGN KEY (teacher_id) REFERENCES teacher (id), FOREIGN KEY (course_id) REFERENCES course (id) );";
         db.execSQL(q);
-        q = " CREATE TABLE status_type (id INTEGER PRIMARY KEY, name TEXT);";
-        db.execSQL(q);
         q = " CREATE TABLE disponibility (id INTEGER PRIMARY KEY, teacher_course_id INTEGER, datetime TEXT, start_time TEXT, end_time TEXT, available INTEGER)";
         db.execSQL(q);
-        q = " CREATE TABLE reservation (id INTEGER PRIMARY KEY, user_id INTEGER, disponibility_id INTEGER, status_type_id INTEGER, " +
+        q = " CREATE TABLE reservation (id INTEGER PRIMARY KEY, user_id INTEGER, disponibility_id INTEGER, " +
                 "FOREIGN KEY (disponibility_id) REFERENCES disponibility (id), " +
-                "FOREIGN KEY (user_id) REFERENCES user (id), " +
-                "FOREIGN KEY (status_type_id) REFERENCES status_type (id) );";
+                "FOREIGN KEY (user_id) REFERENCES user (id));";
         db.execSQL(q);
         q = " CREATE TABLE application_setting (id INTEGER PRIMARY KEY, days TEXT, start_time TEXT, end_time TEXT)";
         db.execSQL(q);

@@ -178,6 +178,10 @@ public class DisponibilityFragment extends Fragment {
             }
             bundle.putString(getResources().getString(R.string.date_paremeter), disponibility.getDatetime());
             bundle.putString(getResources().getString(R.string.slot_parameter), disponibility.getSlotTime());
+            if (disponibility.getAvailability() != 1)
+            {
+                bundle.putBoolean(getResources().getString(R.string.hide_edit), true);
+            }
             disponibilityRegistryFragment.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()

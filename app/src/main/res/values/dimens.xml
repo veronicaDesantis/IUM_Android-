@@ -11,4 +11,7 @@
 	<dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="nav_header_vertical_spacing">8dp</dimen>
 	<dimen name="nav_header_height">176dp</dimen>
+	<dimen name="first_node">10dp</dimen>
+	<dimen name="second_node">50dp</dimen>
+	<dimen name="third_node">110dp</dimen>
 </resources>

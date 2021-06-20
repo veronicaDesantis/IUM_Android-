@@ -41,6 +41,7 @@ public class DisponibilityRegistryFragment extends Fragment {
     private Context myContext = null;
     private FormEnum formEnum = FormEnum.DETAIL;
     private Teacher teacher;
+    private Boolean hide_edit;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class DisponibilityRegistryFragment extends Fragment {
             {
                 slotTextInput.getEditText().setText(j);
             }
+            hide_edit = bundle.getBoolean(getResources().getString(R.string.hide_edit));
         }
         dateTextInput.setFocusable(false);
         dateTextInput.setEnabled(false);
@@ -140,6 +142,10 @@ public class DisponibilityRegistryFragment extends Fragment {
                 courseList.setVisibility(View.GONE);
                 courseTextInput.setVisibility(View.VISIBLE);
                 break;
+        }
+        if (hide_edit)
+        {
+            editButton.setVisibility(View.GONE);
         }
     }
 

@@ -16,5 +16,7 @@
 	<string name="disponibility_id">disponibility_id</string>
 	<string name="date_paremeter">date_parameter</string>
 	<string name="slot_parameter">slot_parameter</string>
+	<string name="reservation_done">reservation_done</string>
+	<string name="hide_edit">hide_edit</string>
 	<!-- #endregion -->
 </resources>
