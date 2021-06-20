@@ -18,5 +18,7 @@
 	<string name="slot_parameter">slot_parameter</string>
 	<string name="reservation_done">reservation_done</string>
 	<string name="hide_edit">hide_edit</string>
+	<string name="editable">editable</string>
+	<string name="reservation_id">reservation_id</string>
 	<!-- #endregion -->
 </resources>

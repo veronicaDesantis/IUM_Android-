@@ -60,6 +60,7 @@
 	<string name="calendar_menu">Calendario</string>
 	<string name="profile_menu">Profilo personale</string>
 	<string name="catalogue_menu">Catalogo</string>
+	<string name="reservation_menu">Prenotazioni</string>
 	<string name="application_setting_menu">Impostazioni applicazione</string>
 	<string name="logout_menu">Logout</string>
 	<string name="login_menu">Login</string>
@@ -72,6 +73,7 @@
 	<string name="forgot_page">Recupera password</string>
 	<string name="dashboard_page">Dashboard</string>
 	<string name="catalogue_page">Catalogo</string>
+	<string name="reservation_page">Prenotazioni</string>
 	<string name="teacher_page">Docenti</string>
 	<string name="disponibility_page">Disponibilità</string>
 	<string name="course_page">Corsi</string>
@@ -83,6 +85,7 @@
 	
 	<string name="no_result">Nessun risultato</string>
 	<string name="no_disponibility">Nessuna disponibilità</string>
+	<string name="no_reservation">Nessuna prenotazione</string>
 	
 	<!-- region TEACHER -->
 	<string name="teacher_new">Creazione docente</string>

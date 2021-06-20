@@ -14,6 +14,7 @@ import it.veronica.coursemanagement.controllers.fragment.DisponibilityFragment;
 import it.veronica.coursemanagement.controllers.fragment.LoginFragment;
 import it.veronica.coursemanagement.controllers.fragment.LogoutFragment;
 import it.veronica.coursemanagement.controllers.fragment.ProfileFragment;
+import it.veronica.coursemanagement.controllers.fragment.ReservationFragment;
 import it.veronica.coursemanagement.controllers.fragment.TeacherFragment;
 import it.veronica.coursemanagement.controllers.fragment.UserFragment;
 import it.veronica.coursemanagement.model.User_type;
@@ -122,6 +123,22 @@ public class RootActivity extends AppCompatActivity {
                         .replace(R.id.nav_host_fragment, CatalogueFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(CatalogueFragment.class.getName()) // name can be null
+                        .commit();
+            }
+            else if (id == R.id.reservation)
+            {
+                //Cambio fragment per la lista delle prenotazioni
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .replace(R.id.nav_host_fragment, ReservationFragment.class, null)
+                        .setReorderingAllowed(true)
+                        .addToBackStack(ReservationFragment.class.getName()) // name can be null
                         .commit();
             }
             else if (id == R.id.teacher) {

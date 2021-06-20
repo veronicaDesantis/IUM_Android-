@@ -27,15 +27,17 @@ import java.util.Date;
 
 import it.veronica.coursemanagement.adapters.DisponibilityCalendarAdapter;
 import it.veronica.coursemanagement.adapters.DisponibilityListAdapter;
+import it.veronica.coursemanagement.adapters.ReservationCalendarAdapter;
+import it.veronica.coursemanagement.adapters.ReservationListAdapter;
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Application_Setting;
-import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Disponibility;
+import it.veronica.coursemanagement.model.Reservation;
 import it.veronica.coursemanagement.model.Teacher;
 import it.veronica.coursemanagement.model.dbManager;
 import it.veronica.coursemanagement.utility.PreferencesManager;
 
-public class DisponibilityFragment extends Fragment {
+public class ReservationFragment extends Fragment {
 
     private View root = null;
     private dbManager  db = null;
@@ -43,18 +45,17 @@ public class DisponibilityFragment extends Fragment {
     private Boolean isCalendar = true;
     private Calendar calendar;
     private Application_Setting applicationSetting;
-    private Teacher teacher;
+    private int user_id;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_disponibility, container, false);
-        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.disponibility_page);
+        root = inflater.inflate(R.layout.fragment_reservation, container, false);
+        ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.reservation_page);
         myContext = this.getContext();
         db = new dbManager(myContext);
 
         PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
-        int user_id = Integer.parseInt(preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_id)));
-        teacher = db.GetTeacherByUserId(user_id);
+        user_id = Integer.parseInt(preferencesManager.GetPreferenceByKey(getResources().getString(R.string.user_id)));
 
         applicationSetting = db.GetApplicationSetting();
 
@@ -169,25 +170,22 @@ public class DisponibilityFragment extends Fragment {
     public AdapterView.OnItemClickListener ListListener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Disponibility disponibility = (Disponibility) adapterView.getItemAtPosition(i);
+            Reservation reservation = (Reservation) adapterView.getItemAtPosition(i);
             //Ricarico il fragment con il nuovo id, per visualizzare i dettagli del docente creato
-            Fragment disponibilityRegistryFragment = new DisponibilityRegistryFragment();
+            Fragment reservationRegistryFragment = new ReservationRegistryFragment();
             Bundle bundle = new Bundle();
-            if (disponibility.getCourse() != null) {
-                bundle.putInt(getResources().getString(R.string.disponibility_id), disponibility.getId());
-            }
-            bundle.putString(getResources().getString(R.string.date_paremeter), disponibility.getDatetime());
-            bundle.putString(getResources().getString(R.string.slot_parameter), disponibility.getSlotTime());
-            if (disponibility.getAvailability() == 2)
-            {
-                bundle.putBoolean(getResources().getString(R.string.hide_edit), true);
-            }
-            disponibilityRegistryFragment.setArguments(bundle);
+            bundle.putString(getResources().getString(R.string.course_title_course), reservation.getDisponibility().getCourse().getTitle());
+            bundle.putString(getResources().getString(R.string.teacher_name_teacher), reservation.getDisponibility().getTeacher().getFullName());
+            bundle.putString(getResources().getString(R.string.disponibility_date), reservation.getDisponibility().getDatetime());
+            bundle.putString(getResources().getString(R.string.disponibility_slot), reservation.getDisponibility().getSlotTime());
+            bundle.putInt(getResources().getString(R.string.reservation_id), reservation.getId());
+            bundle.putBoolean(getResources().getString(R.string.editable), reservation.getEditable());
+            reservationRegistryFragment.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, disponibilityRegistryFragment, null)
+                    .replace(R.id.nav_host_fragment, reservationRegistryFragment, null)
                     .setReorderingAllowed(true)
-                    .addToBackStack(DisponibilityRegistryFragment.class.getName()) // name can be null
+                    .addToBackStack(ReservationRegistryFragment.class.getName()) // name can be null
                     .commit();
         }
     };
@@ -204,7 +202,7 @@ public class DisponibilityFragment extends Fragment {
 
         ListView calendarList = root.findViewById(R.id.calendarList);
         //Prendo la lista di disponibilità per il giorno e per il docente
-        DisponibilityCalendarAdapter adapter = new DisponibilityCalendarAdapter(getActivity(), GetDisponibility(dateString));
+        ReservationCalendarAdapter adapter = new ReservationCalendarAdapter(getActivity(), GetReservation(dateString));
         calendarList.setAdapter(adapter);
         calendarList.setOnItemClickListener(ListListener);
     }
@@ -213,7 +211,7 @@ public class DisponibilityFragment extends Fragment {
     {
         ListView list_view = root.findViewById(R.id.list_view);
         //Prendo la lista di disponibilità per il giorno e per il docente
-        DisponibilityListAdapter adapter = new DisponibilityListAdapter(getActivity(), GetDisponibility(""));
+        ReservationListAdapter adapter = new ReservationListAdapter(getActivity(), GetReservation(""));
         list_view.setAdapter(adapter);
         list_view.setOnItemClickListener(ListListener);
     }
@@ -248,7 +246,7 @@ public class DisponibilityFragment extends Fragment {
         return applicationSetting.getDays().indexOf(dayString) == -1;
     }
 
-    private ArrayList<Disponibility> GetDisponibility(String datetime)
+    private ArrayList<Reservation> GetReservation(String datetime)
     {
         //Prendo la lista di disponibilità per il giorno e per il docente
         String start_time = applicationSetting.getStarTime();
@@ -256,25 +254,23 @@ public class DisponibilityFragment extends Fragment {
         int hour_start = Integer.valueOf(start_time.split(":")[0]);
         String minute_start = start_time.split(":")[1];
         int hour_end = Integer.valueOf(end_time.split(":")[0]);
-        ArrayList<Disponibility> disponibilityList = new ArrayList<Disponibility>();
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         if (datetime != "") {
             while (hour_start < hour_end) {
-                Disponibility disponibility = db.GetDisponibilityByTeacherDateSlot(teacher.getId(), datetime, hour_start + ":" + minute_start);
-                int tempStart = hour_start + 1;
-                if (disponibility == null) {
-                    disponibility = new Disponibility(datetime, hour_start + ":" + minute_start, tempStart + ":" + minute_start);
+                Reservation reservation = db.GetReservationByUser(user_id, datetime, hour_start + ":" + minute_start);
+                if (reservation != null) {
+                    reservationList.add(reservation);
                 }
                 hour_start = hour_start + 1;
-                disponibilityList.add(disponibility);
             }
         }
         else
         {
-            Disponibility[] disponibilities = db.GetDisponibilityByTeacher(teacher.getId());
-            for (Disponibility disponibility: disponibilities) {
-                disponibilityList.add(disponibility);
+            Reservation[] reservations = db.GetReservationByUser(user_id);
+            for (Reservation reservation: reservations) {
+                reservationList.add(reservation);
             }
         }
-        return disponibilityList;
+        return reservationList;
     }
 }

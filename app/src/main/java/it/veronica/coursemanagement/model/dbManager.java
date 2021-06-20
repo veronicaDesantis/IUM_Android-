@@ -445,11 +445,11 @@ public class dbManager {
         db.update(Disponibility.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(id) });
     }
 
-    public void UpdateAvailability(int id, int availabliity_id)
+    public void UpdateAvailability(int id, int available)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("available", availabliity_id);
+        contentValues.put("available", available);
         db.update(Disponibility.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(id) });
     }
 
@@ -554,6 +554,7 @@ public class dbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put("user_id", user_id);
         contentValues.put("disponibility_id", disponibility_id);
+        contentValues.put("deleted", 0);
         long id = 0;
         try
         {
@@ -567,6 +568,76 @@ public class dbManager {
         return (int)id;
     }
 
+    public void UpdateReservation(int id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("deleted", 1);
+        db.update(Reservation.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(id) });
+    }
+
+    public Reservation GetReservationById(int id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Reservation.class.getSimpleName(),
+                new String[]{"id, user_id, disponibility_id, deleted"},
+                "reservation.id LIKE ?",
+                new String[]{ String.valueOf(id) }, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readReservation(cur);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
+    public Reservation GetReservationByUser(int user_id, String datetime, String slot)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Reservation.class.getSimpleName() + " , " + Disponibility.class.getSimpleName(),
+                new String[]{"reservation.id, user_id, disponibility_id, deleted"},
+                "reservation.disponibility_id = disponibility.id AND reservation.user_id LIKE ? AND disponibility.datetime LIKE ? AND disponibility.start_time LIKE ?",
+                new String[]{ String.valueOf(user_id), datetime, slot }, null, null, "");
+        if (cur != null && cur.moveToFirst()) {
+            return readReservation(cur);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public Reservation[] GetReservationByUser(int user_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Reservation.class.getSimpleName() + " , " + Disponibility.class.getSimpleName(),
+                new String[]{"reservation.id, user_id, disponibility_id, deleted"},
+                "reservation.disponibility_id = disponibility.id AND reservation.user_id LIKE ?",
+                new String[]{ String.valueOf(user_id) }, null, null, "");
+        ArrayList<Reservation> listItems = new ArrayList<Reservation>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readReservation(cur));
+            }while (cur.moveToNext());
+        }
+
+        Reservation[] arrItems = new Reservation[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
+    public Reservation readReservation(Cursor cur){
+        Reservation reservation = new Reservation();
+        reservation.setId(cur.getInt(cur.getColumnIndex("id")));
+        reservation.setUser_id(cur.getInt(cur.getColumnIndex("user_id")));
+        reservation.setDisponibility_id(cur.getInt(cur.getColumnIndex("disponibility_id")));
+        reservation.setDisponibility(GetDisponibilityById(reservation.getDisponibility_id()));
+        reservation.setDeleted(cur.getInt(cur.getColumnIndex("deleted")));
+        return reservation;
+    }
 
     //#endregion
 

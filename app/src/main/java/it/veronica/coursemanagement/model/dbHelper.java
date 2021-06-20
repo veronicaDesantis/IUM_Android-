@@ -30,7 +30,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL(q);
         q = " CREATE TABLE disponibility (id INTEGER PRIMARY KEY, teacher_course_id INTEGER, datetime TEXT, start_time TEXT, end_time TEXT, available INTEGER)";
         db.execSQL(q);
-        q = " CREATE TABLE reservation (id INTEGER PRIMARY KEY, user_id INTEGER, disponibility_id INTEGER, " +
+        q = " CREATE TABLE reservation (id INTEGER PRIMARY KEY, user_id INTEGER, disponibility_id INTEGER, deleted INTEGER, " +
                 "FOREIGN KEY (disponibility_id) REFERENCES disponibility (id), " +
                 "FOREIGN KEY (user_id) REFERENCES user (id));";
         db.execSQL(q);

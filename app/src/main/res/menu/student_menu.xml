@@ -13,6 +13,11 @@
 			android:icon="@drawable/ic_catalogue"
 			android:title="@string/catalogue_menu" />
 		<item
+			android:id="@+id/reservation"
+			android:icon="@drawable/ic_calendar"
+			android:title="@string/reservation_menu"
+			/>
+		<item
 			android:id="@+id/profile_menu"
 			android:icon="@drawable/ic_settings"
 			android:title="@string/profile_menu" />
