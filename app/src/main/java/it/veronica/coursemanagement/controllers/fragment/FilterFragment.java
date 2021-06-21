@@ -98,6 +98,9 @@ public class FilterFragment extends Fragment {
             teacherList.setSelection(FilterModel.getTeacher_position());
         }
 
+        ConstraintLayout backgroundContainer = root.findViewById(R.id.backgroundContainer);
+        backgroundContainer.setBackgroundColor(getResources().getColor(R.color.trasparent_gray));
+
         return root;
     }
 
