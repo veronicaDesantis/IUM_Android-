@@ -23,6 +23,7 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Course;
 import it.veronica.coursemanagement.model.Disponibility;
+import it.veronica.coursemanagement.model.FilterModel;
 import it.veronica.coursemanagement.model.Teacher;
 import it.veronica.coursemanagement.model.User_type;
 import it.veronica.coursemanagement.model.dbManager;
@@ -45,8 +46,10 @@ public class CatalogueFragment extends Fragment {
         FloatingActionButton filterButton = root.findViewById(R.id.filterButton);
         filterButton.setOnTouchListener(filterButtonListener);
 
-        String title = "";
-        int teacher_id = -1, start_cfu = 0, end_cfu = 20;
+        String title = FilterModel.getTitle();
+        int start_cfu = FilterModel.getStart_cfu();
+        int end_cfu = FilterModel.getEnd_cfu();
+        int teacher_id = FilterModel.getTeacher_id();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -54,17 +57,6 @@ public class CatalogueFragment extends Fragment {
             if (reservationDone) {
                 Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.create_done), Snackbar.LENGTH_LONG);
                 snackbar.show();
-            }
-            //Verifico la presenza di filtri prima di eseguire la query
-            title = bundle.getString(getResources().getString(R.string.title_filter));
-            teacher_id = bundle.getInt(getResources().getString(R.string.teacher_id));
-            String cfu = bundle.getString(getResources().getString(R.string.cfu_filter));
-            if (cfu != null)
-            {
-                String _start = cfu.split("\\$")[0];
-                String _end = cfu.split("\\$")[1];
-                start_cfu = Integer.parseInt(_start);
-                end_cfu = Integer.parseInt(_end);
             }
         }
 
@@ -85,18 +77,25 @@ public class CatalogueFragment extends Fragment {
         int dp_second_node = (int) (getResources().getDimension(R.dimen.second_node) / getResources().getDisplayMetrics().density);
         int dp_third_node = (int) (getResources().getDimension(R.dimen.third_node) / getResources().getDisplayMetrics().density);
 
-        Course[] courses = db.GetAllCourseFiltered("%" + title + "%",start_cfu,end_cfu);
+        Course[] courses;
+        if (teacher_id == -1) {
+            courses = db.GetAllCourseFiltered("%" + title + "%", start_cfu, end_cfu, null);
+        }
+        else
+        {
+            courses = db.GetAllCourseFiltered("%" + title + "%", start_cfu, end_cfu, teacher_id);
+        }
 
         for (Course course : courses) {
             TreeNode firstNode = new TreeNode(new ItemHolder.ItemHolderData(course.getTitle(), R.drawable.ic_arrow_forward, dp_first_node));
             Teacher[] teachers;
-            if (teacher_id == -1) {
+            //if (teacher_id == -1) {
                 teachers = db.GetTeacherByCourseId(course.getId());
-            }
+            /*}
             else
             {
                 teachers = db.GetTeacherByCourseIdFiltered(course.getId(), teacher_id);
-            }
+            }*/
             if (teachers.length == 0)
             {
                 TreeNode no_teacher = new TreeNode(new ItemHolder.ItemHolderData("Nessun docente disponibile", R.drawable.ic_remove, dp_second_node));
@@ -125,6 +124,11 @@ public class CatalogueFragment extends Fragment {
                 }
             }
             tree_root.addChild(firstNode);
+        }
+        if (courses.length == 0)
+        {
+            TreeNode no_result = new TreeNode(new ItemHolder.ItemHolderData(getResources().getString(R.string.no_result), R.drawable.ic_remove, dp_second_node));
+            tree_root.addChild(no_result);
         }
         return tree_root;
     }
@@ -166,12 +170,6 @@ public class CatalogueFragment extends Fragment {
             //Cambio fragment per il catalogo
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                            R.anim.slide_in,  // enter
-                            R.anim.fade_out,  // exit
-                            R.anim.fade_in,   // popEnter
-                            R.anim.slide_out  // popExit
-                    )
                     .add(R.id.nav_host_fragment, FilterFragment.class, null)
                     .setReorderingAllowed(true)
                     .addToBackStack(FilterFragment.class.getName()) // name can be null

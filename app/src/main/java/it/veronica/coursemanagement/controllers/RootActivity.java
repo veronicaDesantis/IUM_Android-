@@ -114,12 +114,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per il catalogo
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, CatalogueFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(CatalogueFragment.class.getName()) // name can be null
@@ -130,12 +124,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per la lista delle prenotazioni
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, ReservationFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(ReservationFragment.class.getName()) // name can be null
@@ -145,12 +133,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per la lista docenti
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, TeacherFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(TeacherFragment.class.getName()) // name can be null
@@ -160,12 +142,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per la lista docenti
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, DisponibilityFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(DisponibilityFragment.class.getName()) // name can be null
@@ -175,12 +151,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per la lista corsi
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, CourseFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(CourseFragment.class.getName()) // name can be null
@@ -190,12 +160,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per la lista utenti
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, UserFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(UserFragment.class.getName()) // name can be null
@@ -205,12 +169,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per la dashboard
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, DashboardFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(DashboardFragment.class.getName()) // name can be null
@@ -225,12 +183,6 @@ public class RootActivity extends AppCompatActivity {
                 profileFragment.setArguments(bundle);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, profileFragment, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(ProfileFragment.class.getName()) // name can be null
@@ -240,12 +192,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per il login
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, ApplicationSettingFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(ApplicationSettingFragment.class.getName()) // name can be null
@@ -255,12 +201,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per il login
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, LoginFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(LoginFragment.class.getName()) // name can be null
@@ -270,12 +210,6 @@ public class RootActivity extends AppCompatActivity {
                 //Cambio fragment per il logout
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
                         .replace(R.id.nav_host_fragment, LogoutFragment.class, null)
                         .setReorderingAllowed(true)
                         .addToBackStack(LogoutFragment.class.getName()) // name can be null

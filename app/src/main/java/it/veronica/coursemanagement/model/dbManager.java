@@ -238,9 +238,11 @@ public class dbManager {
         }
     }
 
-    public Course[] GetAllCourseFiltered(String title, int start_cfu, int end_cfu)
+    public Course[] GetAllCourseFiltered(String title, int start_cfu, int end_cfu, @Nullable Integer teacher_id)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        if (teacher_id == null)
+        {
             Cursor cur = db.query(Course.class.getSimpleName(),
                     new String[]{"id", "code", "title", "description", "cfu"},
                     "cfu >= ? AND cfu <= ? AND title LIKE ?", new String[]{ String.valueOf(start_cfu), String.valueOf(end_cfu), title }, null, null, "");
@@ -255,6 +257,24 @@ public class dbManager {
             Course[] arrItems = new Course[cur.getCount()];
             arrItems = listItems.toArray(arrItems);
             return arrItems;
+        }
+        else{
+            Cursor cur = db.query(Course.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                    new String[]{"course.id", "code", "title", "description", "cfu"},
+                    "course.id == teacher_course.id AND cfu >= ? AND cfu <= ? AND title LIKE ? AND teacher_course.teacher_id LIKE ?",
+                    new String[]{ String.valueOf(start_cfu), String.valueOf(end_cfu), title, String.valueOf(teacher_id) }, null, null, "");
+            ArrayList<Course> listItems = new ArrayList<Course>();
+            if (cur != null && cur.moveToFirst())
+            {
+                do {
+                    listItems.add(readCourse(cur));
+                }while (cur.moveToNext());
+            }
+
+            Course[] arrItems = new Course[cur.getCount()];
+            arrItems = listItems.toArray(arrItems);
+            return arrItems;
+        }
     }
 
     public Course GetCourseById(int course_id)

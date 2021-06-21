@@ -150,6 +150,7 @@
 	<string name="delete_btn">Elimina</string>
 	<string name="confirm_btn">Conferma</string>
 	<string name="apply_btn">Applica</string>
+	<string name="reset_btn">Reset</string>
 	<!-- endregion -->
 	
 	<!-- region DAYS -->
