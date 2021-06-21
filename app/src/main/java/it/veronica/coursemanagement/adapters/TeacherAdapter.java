@@ -21,7 +21,16 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        return initView(position, convertView, parent);
+    }
 
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return initView(position, convertView, parent);
+    }
+
+    public View initView(int position, View convertView, ViewGroup parent)
+    {
         // Get the data item for this position
         Teacher teacher = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -35,6 +44,5 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
         teacherName.setText(teacher.getFullName());
         // Return the completed view to render on screen
         return convertView;
-
     }
 }

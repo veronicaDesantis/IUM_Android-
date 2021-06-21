@@ -20,5 +20,7 @@
 	<string name="hide_edit">hide_edit</string>
 	<string name="editable">editable</string>
 	<string name="reservation_id">reservation_id</string>
+	<string name="title_filter">title_filter</string>
+	<string name="cfu_filter">cfu_filter</string>
 	<!-- #endregion -->
 </resources>

@@ -114,6 +114,10 @@
 	<string name="course_cfu">CFU</string>
 	<!-- endregion -->
 	
+	<!-- region CATALOGUE -->
+	<string name="filter_available">Filtri disponibili</string>
+	<!-- endregion -->
+	
 	<!-- region RESERVATION -->
 	<string name="reservation_detail">Dettaglio prenotazione</string>
 	<string name="course_title_course">Titolo corso</string>
@@ -145,6 +149,7 @@
 	<string name="save_btn">Salva</string>
 	<string name="delete_btn">Elimina</string>
 	<string name="confirm_btn">Conferma</string>
+	<string name="apply_btn">Applica</string>
 	<!-- endregion -->
 	
 	<!-- region DAYS -->

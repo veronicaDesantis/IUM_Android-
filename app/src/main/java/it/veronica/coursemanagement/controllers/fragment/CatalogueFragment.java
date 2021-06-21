@@ -41,14 +41,12 @@ public class CatalogueFragment extends Fragment {
         myContext = this.getContext();
         db = new dbManager(myContext);
         ((RootActivity) getActivity()).getSupportActionBar().setTitle(R.string.catalogue_page);
-        ((RootActivity)getActivity()).getSupportActionBar().show();
 
-        TreeNode tree_root = PopulateTreeView();
-        AndroidTreeView tView = new AndroidTreeView(getActivity(), tree_root);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultViewHolder(ItemHolder.class);
-        ConstraintLayout container_view = root.findViewById(R.id.container_view);
-        container_view.addView(tView.getView());
+        FloatingActionButton filterButton = root.findViewById(R.id.filterButton);
+        filterButton.setOnTouchListener(filterButtonListener);
+
+        String title = "";
+        int teacher_id = -1, start_cfu = 0, end_cfu = 20;
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -57,22 +55,48 @@ public class CatalogueFragment extends Fragment {
                 Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.create_done), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
+            //Verifico la presenza di filtri prima di eseguire la query
+            title = bundle.getString(getResources().getString(R.string.title_filter));
+            teacher_id = bundle.getInt(getResources().getString(R.string.teacher_id));
+            String cfu = bundle.getString(getResources().getString(R.string.cfu_filter));
+            if (cfu != null)
+            {
+                String _start = cfu.split("\\$")[0];
+                String _end = cfu.split("\\$")[1];
+                start_cfu = Integer.parseInt(_start);
+                end_cfu = Integer.parseInt(_end);
+            }
         }
+
+        TreeNode tree_root = PopulateTreeView(title, start_cfu, end_cfu, teacher_id);
+        AndroidTreeView tView = new AndroidTreeView(getActivity(), tree_root);
+        tView.setDefaultAnimation(true);
+        tView.setDefaultViewHolder(ItemHolder.class);
+        ConstraintLayout container_view = root.findViewById(R.id.container_view);
+        container_view.addView(tView.getView());
+
         return root;
     }
 
-    private TreeNode PopulateTreeView()
+    private TreeNode PopulateTreeView(String title, int start_cfu, int end_cfu, int teacher_id)
     {
         TreeNode tree_root = TreeNode.root();
         int dp_first_node = (int) (getResources().getDimension(R.dimen.first_node) / getResources().getDisplayMetrics().density);
         int dp_second_node = (int) (getResources().getDimension(R.dimen.second_node) / getResources().getDisplayMetrics().density);
         int dp_third_node = (int) (getResources().getDimension(R.dimen.third_node) / getResources().getDisplayMetrics().density);
 
-        Course[] courses = db.GetAllCourse(null);
+        Course[] courses = db.GetAllCourseFiltered("%" + title + "%",start_cfu,end_cfu);
 
         for (Course course : courses) {
             TreeNode firstNode = new TreeNode(new ItemHolder.ItemHolderData(course.getTitle(), R.drawable.ic_arrow_forward, dp_first_node));
-            Teacher[] teachers = db.GetTeacherByCourseId(course.getId());
+            Teacher[] teachers;
+            if (teacher_id == -1) {
+                teachers = db.GetTeacherByCourseId(course.getId());
+            }
+            else
+            {
+                teachers = db.GetTeacherByCourseIdFiltered(course.getId(), teacher_id);
+            }
             if (teachers.length == 0)
             {
                 TreeNode no_teacher = new TreeNode(new ItemHolder.ItemHolderData("Nessun docente disponibile", R.drawable.ic_remove, dp_second_node));
@@ -133,6 +157,26 @@ public class CatalogueFragment extends Fragment {
                 Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.need_registration), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
+        }
+    };
+
+    private View.OnTouchListener filterButtonListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            //Cambio fragment per il catalogo
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    )
+                    .add(R.id.nav_host_fragment, FilterFragment.class, null)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(FilterFragment.class.getName()) // name can be null
+                    .commit();
+            return true;
         }
     };
 }

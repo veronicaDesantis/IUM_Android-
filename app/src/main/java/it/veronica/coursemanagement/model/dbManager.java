@@ -238,6 +238,25 @@ public class dbManager {
         }
     }
 
+    public Course[] GetAllCourseFiltered(String title, int start_cfu, int end_cfu)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor cur = db.query(Course.class.getSimpleName(),
+                    new String[]{"id", "code", "title", "description", "cfu"},
+                    "cfu >= ? AND cfu <= ? AND title LIKE ?", new String[]{ String.valueOf(start_cfu), String.valueOf(end_cfu), title }, null, null, "");
+            ArrayList<Course> listItems = new ArrayList<Course>();
+            if (cur != null && cur.moveToFirst())
+            {
+                do {
+                    listItems.add(readCourse(cur));
+                }while (cur.moveToNext());
+            }
+
+            Course[] arrItems = new Course[cur.getCount()];
+            arrItems = listItems.toArray(arrItems);
+            return arrItems;
+    }
+
     public Course GetCourseById(int course_id)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -346,6 +365,26 @@ public class dbManager {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cur = db.query(Teacher.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
                 new String[]{"teacher.id", "name", "surname", "user_id"}, "teacher.id = teacher_course.teacher_id AND teacher_course.course_id like ?", new String[]{ String.valueOf(course_id) }, null, null, "");
+        ArrayList<Teacher> listItems = new ArrayList<Teacher>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readTeacher(cur));
+            }while (cur.moveToNext());
+        }
+
+        Teacher[] arrItems = new Teacher[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
+    public Teacher[] GetTeacherByCourseIdFiltered(int course_id, int teacher_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Teacher.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                new String[]{"teacher.id", "name", "surname", "user_id"},
+                "teacher.id = teacher_course.teacher_id AND teacher_course.course_id like ? AND teacher.id LIKE ?",
+                new String[]{ String.valueOf(course_id), String.valueOf(teacher_id) }, null, null, "");
         ArrayList<Teacher> listItems = new ArrayList<Teacher>();
         if (cur != null && cur.moveToFirst())
         {
