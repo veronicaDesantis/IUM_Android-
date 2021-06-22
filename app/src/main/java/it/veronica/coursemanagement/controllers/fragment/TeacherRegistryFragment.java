@@ -224,7 +224,7 @@ public class TeacherRegistryFragment extends Fragment {
             }
             else {
                 //Aggiorno l'utente normale
-                db.UpdateMail(user_id, email);
+                db.UpdateUser(user_id, name, surname, email);
                 db.UpdateTeacher(id, name,surname);
                 formEnum = FormEnum.DETAIL;
                 ToogleDetail(formEnum);

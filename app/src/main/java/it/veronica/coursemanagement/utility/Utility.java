@@ -1,5 +1,7 @@
 package it.veronica.coursemanagement.utility;
 
+import android.util.Patterns;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,5 +14,9 @@ public class Utility {
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         return matcher.matches();
+    }
+
+    public static boolean IsValidEmail(String email) {
+        return (Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 }

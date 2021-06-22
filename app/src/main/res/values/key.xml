@@ -24,5 +24,6 @@
 	<string name="reservation_id">reservation_id</string>
 	<string name="title_filter">title_filter</string>
 	<string name="cfu_filter">cfu_filter</string>
+	<string name="last_visited_key">last_visited_key</string>
 	<!-- #endregion -->
 </resources>

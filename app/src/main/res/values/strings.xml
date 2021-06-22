@@ -24,6 +24,7 @@
 	<!-- region ERROR -->
 	<string name="user_error">Le credenziali risultano errate</string>
 	<string name="email_error">Inserire l\'email</string>
+	<string name="email_validity_errore">Inserire un\'email valida</string>
 	<string name="email_in_db_error">Email già registrata</string>
 	<string name="email_not_in_db_error">L\'email non risulta registrata</string>
 	<string name="generic_error">Errore generico</string>
@@ -33,6 +34,9 @@
 	<string name="password_validity_error">Inserire una password valida</string>
 	<string name="password_confirm_error">Le due password non corrispondono</string>
 	<string name="old_password_error">La vecchia password non corrisponde</string>
+	<string name="max_cfu_error">I CFU superano la soglia massima</string>
+	<string name="reservation_error">Corso non eliminabile, alcuni studenti hanno già inserito una prenotazione</string>
+	<string name="disponibility_error">Corso non eliminabile, alcuni docenti hanno già inserito una disponibilità</string>
 	<!-- endregion My Region -->
 	
 	<!-- region EVENT -->

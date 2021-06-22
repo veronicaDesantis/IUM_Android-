@@ -20,6 +20,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import it.veronica.coursemanagement.controllers.RootActivity;
 import it.veronica.coursemanagement.model.Course;
+import it.veronica.coursemanagement.model.Disponibility;
+import it.veronica.coursemanagement.model.Reservation;
 import it.veronica.coursemanagement.model.Teacher;
 import it.veronica.coursemanagement.model.User;
 import it.veronica.coursemanagement.model.User_type;
@@ -161,6 +163,10 @@ public class CourseRegistryFragment extends Fragment {
             else if (cfu.equals("")) {
                 cfuTextInput.setError(getResources().getString(R.string.required));
             }
+            else if (Integer.parseInt(cfu) > 12)
+            {
+                cfuTextInput.setError(getResources().getString(R.string.max_cfu_error));
+            }
             else {
                 //Creo il corso
                 Course course = new Course(code, title, description, Integer.parseInt(cfu));
@@ -230,17 +236,34 @@ public class CourseRegistryFragment extends Fragment {
         public void onClick(View view) {
             TextInputLayout idTextInput = root.findViewById(R.id.idTextInput);
             int id = Integer.parseInt(idTextInput.getEditText().getText().toString());
-            db.DeleteCourse(id);
-            Fragment courseFragment = new CourseFragment();
-            Bundle bundle = new Bundle();
-            bundle.putBoolean(getResources().getString(R.string.deleted), true);
-            courseFragment.setArguments(bundle);
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, courseFragment, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack(CourseFragment.class.getName()) // name can be null
-                    .commit();
+            TextInputLayout titleTextInput = root.findViewById(R.id.titleTextInput);
+            //Prima di eliminare verifico se ha delle prenotazioni
+            Reservation[] reservations = db.GetReservationByCourse(id);
+            if (reservations.length != 0)
+            {
+                titleTextInput.setError(getResources().getString(R.string.reservation_error));
+            }
+            else{
+            //Prima di eliminare verifico se ha delle disponibilità
+                Disponibility[] disponibilities = db.GetDisponibilityByCourseId(id);
+                if (disponibilities.length != 0)
+                {
+                    titleTextInput.setError(getResources().getString(R.string.disponibility_error));
+                }
+                else {
+                    db.DeleteCourse(id);
+                    Fragment courseFragment = new CourseFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(getResources().getString(R.string.deleted), true);
+                    courseFragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.nav_host_fragment, courseFragment, null)
+                            .setReorderingAllowed(true)
+                            .addToBackStack(CourseFragment.class.getName()) // name can be null
+                            .commit();
+                }
+            }
         }
     };
 

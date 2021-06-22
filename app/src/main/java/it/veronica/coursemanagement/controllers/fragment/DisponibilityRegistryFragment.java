@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 import it.veronica.coursemanagement.adapters.CourseAdapter;
@@ -42,6 +43,7 @@ public class DisponibilityRegistryFragment extends Fragment {
     private FormEnum formEnum = FormEnum.DETAIL;
     private Teacher teacher;
     private Boolean hide_edit;
+    private String lastVisitedDay;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,6 +103,7 @@ public class DisponibilityRegistryFragment extends Fragment {
             {
                 slotTextInput.getEditText().setText(j);
             }
+            lastVisitedDay = bundle.getString(getResources().getString(R.string.last_visited_key));
             hide_edit = bundle.getBoolean(getResources().getString(R.string.hide_edit));
         }
         dateTextInput.setFocusable(false);
@@ -208,6 +211,7 @@ public class DisponibilityRegistryFragment extends Fragment {
             Fragment disponibility = new DisponibilityFragment();
             Bundle bundle = new Bundle();
             bundle.putBoolean(getResources().getString(R.string.deleted), true);
+            bundle.putString(getResources().getString(R.string.last_visited_key), lastVisitedDay);
             disponibility.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
@@ -222,9 +226,13 @@ public class DisponibilityRegistryFragment extends Fragment {
     private View.OnTouchListener backButtonListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Fragment disponibility = new DisponibilityFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(getResources().getString(R.string.last_visited_key), lastVisitedDay);
+            disponibility.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment, DisponibilityFragment.class, null)
+                    .replace(R.id.nav_host_fragment, disponibility, null)
                     .setReorderingAllowed(true)
                     .addToBackStack(DisponibilityFragment.class.getName()) // name can be null
                     .commit();

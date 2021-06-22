@@ -20,6 +20,7 @@ import com.example.coursemanagement.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -81,7 +82,7 @@ public class DisponibilityFragment extends Fragment {
         FloatingActionButton goToList = root.findViewById(R.id.goToList);
         goToList.setOnTouchListener(goToListListener);
         listLayout.setVisibility(View.GONE);
-        RenderCalendarView();
+
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -90,8 +91,15 @@ public class DisponibilityFragment extends Fragment {
                 Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), getString(R.string.delete_done), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
+            String dateString = bundle.getString(getResources().getString(R.string.last_visited_key));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                calendar.setTime(sdf.parse(dateString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-
+        RenderCalendarView();
         return root;
     }
 
@@ -182,6 +190,10 @@ public class DisponibilityFragment extends Fragment {
             {
                 bundle.putBoolean(getResources().getString(R.string.hide_edit), true);
             }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateDisplay = calendar.getTime();
+            String dateString = dateFormat.format(dateDisplay);
+            bundle.putString(getResources().getString(R.string.last_visited_key), dateString);
             disponibilityRegistryFragment.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()

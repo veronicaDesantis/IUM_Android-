@@ -71,6 +71,7 @@ public class RegisterFragment extends Fragment{
             String password = passwordTextInput.getEditText().getText().toString();
             String confirmPassword = confirmPasswordTextInput.getEditText().getText().toString();
             //Verify password
+            Boolean isMailValid = Utility.IsValidEmail(email);
             if (name.equals(""))
             {
                 nameTextInput.setError(getResources().getString(R.string.name_error));
@@ -81,7 +82,10 @@ public class RegisterFragment extends Fragment{
             else if (email.equals("")) {
                 emailTextInput.setError(getResources().getString(R.string.email_error));
             }
-            else if (Utility.IsPasswordValid(password)) {
+            else if (!Utility.IsValidEmail(email)) {
+                emailTextInput.setError(getResources().getString(R.string.email_validity_errore));
+            }
+            else if (!Utility.IsPasswordValid(password)) {
                 passwordTextInput.setError(getResources().getString(R.string.password_validity_error));
             }
             else if (!password.equals(confirmPassword)) {
@@ -102,7 +106,7 @@ public class RegisterFragment extends Fragment{
                         preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_id), String.valueOf(user_id));
                         preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_type_id), String.valueOf(user.getUser_type_id()));
                         Intent intent = new Intent(getActivity(), RootActivity.class);
-                        intent.putExtra(getResources().getString(R.string.logged_out), true);
+                        intent.putExtra(getResources().getString(R.string.register_done), true);
                         startActivity(intent);
                     }
                 }

@@ -54,20 +54,13 @@ public class dbManager {
         db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
     }
 
+
     public void UpdateUser(int user_id, String name, String surname, String email)
     {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("surname", surname);
-        contentValues.put("email", email);
-        db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
-    }
-
-    public void UpdateMail(int user_id, String email)
-    {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
         contentValues.put("email", email);
         db.update(User.class.getSimpleName(), contentValues, "id LIKE ?", new String[]{ String.valueOf(user_id) });
     }
@@ -574,6 +567,26 @@ public class dbManager {
         return arrItems;
     }
 
+    public Disponibility[] GetDisponibilityByCourseId(int course_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Disponibility.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                new String[]{"disponibility.id, teacher_course_id, datetime, start_time, end_time, available, teacher_course.teacher_id, teacher_course.course_id"},
+                "disponibility.teacher_course_id = teacher_course.id AND teacher_course.course_id LIKE ? AND disponibility.available LIKE 1",
+                new String[]{ String.valueOf(course_id) }, null, null, "");
+        ArrayList<Disponibility> listItems = new ArrayList<Disponibility>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readDisponibility(cur));
+            }while (cur.moveToNext());
+        }
+
+        Disponibility[] arrItems = new Disponibility[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
     public Disponibility GetDisponibilityById(int disponibility_id)
     {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -675,6 +688,26 @@ public class dbManager {
                 new String[]{"reservation.id, user_id, disponibility_id, deleted"},
                 "reservation.disponibility_id = disponibility.id AND reservation.user_id LIKE ?",
                 new String[]{ String.valueOf(user_id) }, null, null, "");
+        ArrayList<Reservation> listItems = new ArrayList<Reservation>();
+        if (cur != null && cur.moveToFirst())
+        {
+            do {
+                listItems.add(readReservation(cur));
+            }while (cur.moveToNext());
+        }
+
+        Reservation[] arrItems = new Reservation[cur.getCount()];
+        arrItems = listItems.toArray(arrItems);
+        return arrItems;
+    }
+
+    public Reservation[] GetReservationByCourse(int course_id)
+    {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cur = db.query(Reservation.class.getSimpleName() + " , " + Disponibility.class.getSimpleName() + " , " + Teacher_course.class.getSimpleName(),
+                new String[]{"reservation.id, user_id, disponibility_id, deleted"},
+                "reservation.disponibility_id = disponibility.id AND disponibility.teacher_course_id = teacher_course.id AND teacher_course.course_id LIKE ?",
+                new String[]{ String.valueOf(course_id) }, null, null, "");
         ArrayList<Reservation> listItems = new ArrayList<Reservation>();
         if (cur != null && cur.moveToFirst())
         {
