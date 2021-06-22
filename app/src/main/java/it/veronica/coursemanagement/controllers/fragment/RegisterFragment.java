@@ -1,6 +1,7 @@
 package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,8 +101,9 @@ public class RegisterFragment extends Fragment{
                         PreferencesManager preferencesManager = PreferencesManager.getInstance(getResources().getString(R.string.preferencesManager), myContext);
                         preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_id), String.valueOf(user_id));
                         preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_type_id), String.valueOf(user.getUser_type_id()));
-                        /*Intent intent = new Intent(RegisterActivity.this, MenuActivity.class);
-                        startActivity(intent);*/
+                        Intent intent = new Intent(getActivity(), RootActivity.class);
+                        intent.putExtra(getResources().getString(R.string.logged_out), true);
+                        startActivity(intent);
                     }
                 }
                 else

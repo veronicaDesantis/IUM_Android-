@@ -41,7 +41,7 @@
 				android:visibility="gone">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:inputType="text"
 					android:maxLines="1" />
 			</com.google.android.material.textfield.TextInputLayout>
@@ -53,7 +53,7 @@
 				android:visibility="gone">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:inputType="text"
 					android:maxLines="1" />
 			</com.google.android.material.textfield.TextInputLayout>
@@ -64,7 +64,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/teacher_name"
 					android:inputType="text"
 					android:maxLines="1" />
@@ -76,7 +76,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/teacher_surname"
 					android:inputType="text"
 					android:maxLines="1" />
@@ -88,7 +88,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/teacher_email"
 					android:inputType="textEmailAddress"
 					android:maxLines="1" />

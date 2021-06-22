@@ -37,10 +37,11 @@
 			<com.google.android.material.textfield.TextInputLayout
 				android:id="@+id/idTextInput"
 				style="@style/parent"
-				android:layout_marginTop="@dimen/signup_text_margin_top"				android:visibility="gone">
+				android:layout_marginTop="@dimen/signup_text_margin_top"
+				android:visibility="gone">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:inputType="text"
 					android:maxLines="1"
 					android:text="-1" />
@@ -52,7 +53,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/disponibility_date"
 					android:inputType="text"
 					android:maxLines="1" />
@@ -64,7 +65,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/disponibility_slot"
 					android:inputType="text"
 					android:maxLines="1" />
@@ -76,7 +77,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/course_title"
 					android:inputType="text"
 					android:text="--"

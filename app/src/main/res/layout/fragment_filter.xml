@@ -53,7 +53,7 @@
 				android:layout_marginTop="@dimen/signup_text_margin_top">
 				
 				<com.google.android.material.textfield.TextInputEditText
-					style="@style/modifiedEditText"
+					style="@style/Theme.CourseManagement.TextInputLayout"
 					android:hint="@string/course_title_course"
 					android:inputType="text"
 					android:maxLines="1" />

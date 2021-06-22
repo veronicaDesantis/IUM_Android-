@@ -43,7 +43,7 @@
                     android:layout_marginTop="@dimen/loginViewsMargin">
                 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/modifiedEditText"
+                        style="@style/Theme.CourseManagement.TextInputLayout"
                         android:hint="@string/old_password_hint"
                         android:inputType="textPassword"
                         android:maxLines="1" />
@@ -56,7 +56,7 @@
                     android:visibility="visible">
                 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/modifiedEditText"
+                        style="@style/Theme.CourseManagement.TextInputLayout"
                         android:hint="@string/password_hint"
                         android:inputType="textPassword"
                         android:maxLines="1" />
@@ -69,7 +69,7 @@
                     android:visibility="visible">
                 
                     <com.google.android.material.textfield.TextInputEditText
-                        style="@style/modifiedEditText"
+                        style="@style/Theme.CourseManagement.TextInputLayout"
                         android:hint="@string/confirm_password_hint"
                         android:inputType="textPassword"
                         android:maxLines="1" />

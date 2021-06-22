@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,13 @@ public class LoginFragment extends Fragment {
         href_register.setOnClickListener(hrefRegisterListener);
         TextView href_forgot_password = root.findViewById(R.id.href_forgot_password);
         href_forgot_password.setOnClickListener(hrefForgotListener);
+
+        TextInputLayout textInputEmail = root.findViewById(R.id.textInputEmail);
+        TextInputLayout textInputPassword = root.findViewById(R.id.textInputPassword);
+
+        textInputEmail.getEditText().addTextChangedListener(textChangedListener);
+        textInputPassword.getEditText().addTextChangedListener(textChangedListener);
+
         return root;
     }
 
@@ -73,11 +82,13 @@ public class LoginFragment extends Fragment {
                     preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_id), String.valueOf(dbUser.getId()));
                     preferencesManager.PutPreferenceByKey(getResources().getString(R.string.user_type_id), String.valueOf(dbUser.getUser_type_id()));
                     Intent intent = new Intent(getActivity(), RootActivity.class);
+                    intent.putExtra(getResources().getString(R.string.logged_in), true);
                     startActivity(intent);
                 }
                 else
                 {
                     textInputPassword.setError(getResources().getString(R.string.user_error));
+                    textInputEmail.setError(getResources().getString(R.string.user_error));
                 }
             }
         }
@@ -106,6 +117,26 @@ public class LoginFragment extends Fragment {
                     .setReorderingAllowed(true)
                     .addToBackStack(ForgotFragment.class.getName()) // name can be null
                     .commit();
+        }
+    };
+
+    private TextWatcher textChangedListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            TextInputLayout textInputEmail = root.findViewById(R.id.textInputEmail);
+            TextInputLayout textInputPassword = root.findViewById(R.id.textInputPassword);
+            textInputEmail.setError("");
+            textInputPassword.setError("");
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
         }
     };
 }

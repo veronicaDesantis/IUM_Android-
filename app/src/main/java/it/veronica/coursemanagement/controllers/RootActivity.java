@@ -92,6 +92,16 @@ public class RootActivity extends AppCompatActivity {
                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.logout_done), Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
+            Boolean log_in = extras.getBoolean(getResources().getString(R.string.logged_in));
+            if (log_in) {
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.login_done), Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+            Boolean registrated = extras.getBoolean(getResources().getString(R.string.registrated));
+            if (registrated) {
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.register_done), Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
         }
     }
 

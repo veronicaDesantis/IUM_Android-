@@ -42,14 +42,6 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL(i);
         i = " INSERT INTO user_type(name) VALUES('Docente');";
         db.execSQL(i);
-        i = " INSERT INTO user_type(name) VALUES('Amministratore');";
-        db.execSQL(i);
-        i = " INSERT INTO status_type(name) VALUES('Attiva');";
-        db.execSQL(i);
-        i = " INSERT INTO status_type(name) VALUES('Effettuata');";
-        db.execSQL(i);
-        i = " INSERT INTO status_type(name) VALUES('Disdetta');";
-        db.execSQL(i);
         //Inserisco utenza amministrativa
         i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('admin', 'admin','admin@mail.it', '" + AesCrypt.encrypt(DEFAULTPW) + "', 3)";
         db.execSQL(i);

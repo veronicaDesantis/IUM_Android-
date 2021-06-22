@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingTop="23dp">
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_alignParentTop="true"
     android:orientation="vertical"
     android:layout_marginTop="40dp"
     android:layout_marginRight="30dp"
     android:layout_marginLeft="30dp"
-    android:background="?android:attr/colorBackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="?android:attr/colorBackground">
     
     
     <androidx.cardview.widget.CardView
@@ -37,9 +50,9 @@
                 android:id="@+id/textInputEmail"
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin">
-                
+    
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/modifiedEditText"
+                    style="@style/Theme.CourseManagement.TextInputLayout"
                     android:hint="@string/email_hint"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
@@ -51,7 +64,7 @@
                 android:layout_marginTop="@dimen/loginViewsMargin">
                 
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/modifiedEditText"
+                    style="@style/Theme.CourseManagement.TextInputLayout"
                     android:hint="@string/password_hint"
                     android:inputType="textPassword"
                     android:maxLines="1" />
@@ -89,3 +102,5 @@
     </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>
