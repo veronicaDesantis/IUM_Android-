@@ -1,6 +1,7 @@
 package it.veronica.coursemanagement.controllers.fragment;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.coursemanagement.R;
@@ -25,6 +27,7 @@ public class ApplicationSettingFragment extends Fragment {
     private Context myContext = null;
     private dbManager db = null;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_application_setting, container, false);
@@ -103,6 +106,7 @@ public class ApplicationSettingFragment extends Fragment {
 
     //Listener sul bottone del salvataggio
     private View.OnClickListener saveButtonListener = new View.OnClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onClick(View view) {
             TimePicker startTimePicker = root.findViewById(R.id.startTimePicker);

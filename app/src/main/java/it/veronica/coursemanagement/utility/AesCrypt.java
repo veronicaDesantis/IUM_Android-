@@ -1,5 +1,6 @@
 package it.veronica.coursemanagement.utility;
 
+import android.annotation.SuppressLint;
 import android.util.Base64;
 
 import java.security.Key;

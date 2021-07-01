@@ -4,16 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.coursemanagement.R;
-
 import it.veronica.coursemanagement.utility.AesCrypt;
 
 public class dbHelper extends SQLiteOpenHelper {
-    public static final String DBNAME="CourseManagement";
-    public static final String DEFAULTPW = "P4$$word";
+    public static final String DB_NAME="CourseManagement";
+    public static final String DEFAULT_PW = "P4$$w0rd.";
     public dbHelper(Context context){
 
-        super(context, DBNAME, null, 1);
+        super(context, DB_NAME, null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -42,19 +40,19 @@ public class dbHelper extends SQLiteOpenHelper {
         db.execSQL(i);
         i = " INSERT INTO user_type(name) VALUES('Docente');";
         db.execSQL(i);
-        //Inserisco utenza amministrativa
-        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('admin', 'admin','admin@mail.it', '" + AesCrypt.encrypt(DEFAULTPW) + "', 3)";
+        //Insert administrator user
+        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('admin', 'admin','admin@mail.it', '" + AesCrypt.encrypt(DEFAULT_PW) + "', 3)";
         db.execSQL(i);
-        //Inserisco utenza docente
-        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('docente', 'docente', 'docente@mail.it', '" + AesCrypt.encrypt(DEFAULTPW) + "', 2)";
+        //Insert teacher user
+        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('docente', 'docente', 'docente@mail.it', '" + AesCrypt.encrypt(DEFAULT_PW) + "', 2)";
         db.execSQL(i);
-        //Inserisco docente
+        //Insert teacher
         i = " INSERT INTO teacher(name, surname, user_id) VALUES ('docente', 'docente', 2)";
         db.execSQL(i);
-        //Inserisco utenza utente
-        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('utente', 'utente', 'utente@mail.it', '" + AesCrypt.encrypt(DEFAULTPW) + "', 1)";
+        //Insert student user
+        i = " INSERT INTO user(name,surname,email,password,user_type_id) VALUES('utente', 'utente', 'utente@mail.it', '" + AesCrypt.encrypt(DEFAULT_PW) + "', 1)";
         db.execSQL(i);
-        //Inserisco i setting
+        //Insert settings
         i = " INSERT INTO application_setting(days,start_time,end_time) VALUES('lunedi,martedi,mercoledi,giovedi,venerdi', '14:00', '18:00')";
         db.execSQL(i);
     }
